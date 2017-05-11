@@ -1,0 +1,12 @@
+CREATE TABLE route(
+	id_seq NUMBER(6),
+	id_person NUMBER(6),
+	id_place NUMBER(6),
+	type_person VARCHAR2(200),
+	type_place VARCHAR2(200),
+	num_measur NUMBER(10),
+	unit VARCHAR2(200),
+	activity VARCHAR2(200),
+	timestamp_epoch NUMBER(10),
+	date_varchar VARCHAR2(200)
+)

@@ -33,7 +33,7 @@ date_varchar VARCHAR2(200)
 )
 
 DOM 1, ULICA 1_1, DZIELNICA 1 - fin
-INSERT INTO power_consumption VALUES(1,101,1001,11,'lightbulb', 1, 1493510460, 'OFF', '30-04-17 0:01');
+INSERT INTO power_consumption VALUES(1,101,1001,11,'lightbulb', 0, 1493510460, 'OFF', '30-04-17 0:01');
 INSERT INTO power_consumption VALUES(1,101,1001,11,'lightbulb', 0, 1493535600, 'ON', '30-04-17 7:00');
 INSERT INTO power_consumption VALUES(1,101,1001,11,'lightbulb', 1, 1493539200, 'OFF', '30-04-17 8:00');
 INSERT INTO power_consumption VALUES(1,101,1001,11,'lightbulb', 0, 1493546400, 'ON', '30-04-17 10:00');
@@ -62,7 +62,7 @@ INSERT INTO power_consumption VALUES(1,101,1001,13,'washer', 20, 1493557200, 'OF
 
 
 DOM 2, ULICA 1_1, DZIELNICA 1 - fin
-INSERT INTO power_consumption VALUES(2,101,1001,21,'lightbulb', 1, 1493510460, 'OFF', '30-04-17 0:01');
+INSERT INTO power_consumption VALUES(2,101,1001,21,'lightbulb', 0, 1493510460, 'OFF', '30-04-17 0:01');
 INSERT INTO power_consumption VALUES(2,101,1001,21,'lightbulb', 0, 1493578800, 'ON', '30-04-17 19:00');
 INSERT INTO power_consumption VALUES(2,101,1001,21,'lightbulb', 2, 1493582400, 'OFF', '30-04-17 20:00');
 INSERT INTO power_consumption VALUES(2,101,1001,21,'lightbulb', 0, 1493583300, 'ON', '30-04-17 20:15');
@@ -77,7 +77,7 @@ INSERT INTO power_consumption VALUES(2,101,1001,22,'tv', 0.5, 1493578800, 'ON', 
 INSERT INTO power_consumption VALUES(2,101,1001,22,'tv', 25, 1493593200, 'STANDBY', '30-04-17 23:00');
 
 INSERT INTO power_consumption VALUES(2,101,1001,23,'washer', 0, 1493510460, 'OFF', '30-04-17 00:01');
-INSERT INTO power_consumption VALUES(2,101,1001,23,'washer', 0, 1493541000, 'STANBY', '30-04-17 8:30');
+INSERT INTO power_consumption VALUES(2,101,1001,23,'washer', 0, 1493541000, 'STANDBY', '30-04-17 8:30');
 INSERT INTO power_consumption VALUES(2,101,1001,23,'washer', 1, 1493559000, 'ON', '30-04-17 13:30');
 INSERT INTO power_consumption VALUES(2,101,1001,23,'washer', 40, 1493560800, 'STANDBY', '30-04-17 14:00');
 INSERT INTO power_consumption VALUES(2,101,1001,23,'washer', 2, 1493575200, 'OFF', '30-04-17 18:00');
@@ -85,7 +85,7 @@ INSERT INTO power_consumption VALUES(2,101,1001,23,'washer', 2, 1493575200, 'OFF
 
 
 DOM 3, ULICA 1_1, DZIELNICA 1 - fin
-INSERT INTO power_consumption VALUES(3,101,1001,31,'lightbulb', 1, 1493510460, 'OFF', '30-04-17 0:01');
+INSERT INTO power_consumption VALUES(3,101,1001,31,'lightbulb', 0, 1493510460, 'OFF', '30-04-17 0:01');
 INSERT INTO power_consumption VALUES(3,101,1001,31,'lightbulb', 0, 1493578800, 'ON', '30-04-17 19:00');
 INSERT INTO power_consumption VALUES(3,101,1001,31,'lightbulb', 2, 1493582400, 'OFF', '30-04-17 20:00');
 INSERT INTO power_consumption VALUES(3,101,1001,31,'lightbulb', 0, 1493583300, 'ON', '30-04-17 20:15');
@@ -93,7 +93,7 @@ INSERT INTO power_consumption VALUES(3,101,1001,31,'lightbulb', 1, 1493584200, '
 INSERT INTO power_consumption VALUES(3,101,1001,31,'lightbulb', 0, 1493586000, 'ON', '30-04-17 21:00');
 INSERT INTO power_consumption VALUES(3,101,1001,31,'lightbulb', 4, 1493593200, 'OFF', '30-04-17 23:00');
 
-INSERT INTO power_consumption VALUES(3,101,1001,32,'tv', 2, 1493517600, 'STANDBY', '30-04-17 2:00');
+INSERT INTO power_consumption VALUES(3,101,1001,32,'tv', 0, 1493517600, 'STANDBY', '30-04-17 2:00');
 INSERT INTO power_consumption VALUES(3,101,1001,32,'tv', 3, 1493550000, 'ON', '30-04-17 11:00');
 INSERT INTO power_consumption VALUES(3,101,1001,32,'tv', 20, 1493557200, 'STANDBY', '30-04-17 13:00');
 INSERT INTO power_consumption VALUES(3,101,1001,32,'tv', 1, 1493564400, 'ON', '30-04-17 15:00');
@@ -105,7 +105,7 @@ INSERT INTO power_consumption VALUES(3,101,1001,32,'tv', 40, 1493593200, 'STANDB
 
 INSERT INTO power_consumption VALUES(3,101,1001,33,'washer', 0, 1493517600, 'OFF', '30-04-17 2:00');
 INSERT INTO power_consumption VALUES(3,101,1001,33,'washer', 0, 1493542800, 'ON', '30-04-17 9:00');
-INSERT INTO power_consumption VALUES(3,101,1001,33,'washer', 35, 1493544600, 'STANBY', '30-04-17 9:30');
+INSERT INTO power_consumption VALUES(3,101,1001,33,'washer', 35, 1493544600, 'STANDBY', '30-04-17 9:30');
 INSERT INTO power_consumption VALUES(3,101,1001,33,'washer', 1, 1493546400, 'ON', '30-04-17 10:00');
 INSERT INTO power_consumption VALUES(3,101,1001,33,'washer', 35, 1493548200, 'STANDBY', '30-04-17 10:30');
 INSERT INTO power_consumption VALUES(3,101,1001,33,'washer', 1, 1493560800, 'ON', '30-04-17 14:00');
@@ -114,7 +114,7 @@ INSERT INTO power_consumption VALUES(3,101,1001,33,'washer', 35, 1493563200, 'OF
 
 
 DOM 4, ULICA 2_1, DZIELNICA 2 - fin
-INSERT INTO power_consumption VALUES(4,202,1002,41,'lightbulb', 2, 1493510460, 'OFF', '30-04-17 0:01');
+INSERT INTO power_consumption VALUES(4,202,1002,41,'lightbulb', 0, 1493510460, 'OFF', '30-04-17 0:01');
 INSERT INTO power_consumption VALUES(4,201,1002,41,'lightbulb', 0, 1493532000, 'ON', '30-04-17 6:00');
 INSERT INTO power_consumption VALUES(4,201,1002,41,'lightbulb', 2, 1493539200, 'OFF', '30-04-17 8:00');
 INSERT INTO power_consumption VALUES(4,201,1002,41,'lightbulb', 0, 1493582400, 'ON', '30-04-17 20:00');
@@ -123,8 +123,8 @@ INSERT INTO power_consumption VALUES(4,201,1002,41,'lightbulb', 0, 1493589600, '
 INSERT INTO power_consumption VALUES(4,201,1002,41,'lightbulb', 2, 1493593200, 'OFF', '30-04-17 23:00');
 
 
-INSERT INTO power_consumption VALUES(4,201,1002,42,'tv', 0, 1493510460, 'OFF', '30-04-17 0:01');
-INSERT INTO power_consumption VALUES(4,201,1002,42,'tv', 0, 1493542800, 'ON', '30-04-17 9:00');
+INSERT INTO power_consumption VALUES(4,201,1002,42,'tv', 0, 1493510460, 'STANDBY', '30-04-17 0:01');
+INSERT INTO power_consumption VALUES(4,201,1002,42,'tv', 3, 1493542800, 'ON', '30-04-17 9:00');
 INSERT INTO power_consumption VALUES(4,201,1002,42,'tv', 40, 1493564400, 'STANDBY', '30-04-17 15:00');
 INSERT INTO power_consumption VALUES(4,201,1002,42,'tv', 1.5, 1493575200, 'ON', '30-04-17 18:00');
 INSERT INTO power_consumption VALUES(4,201,1002,42,'tv', 50 1493589600, 'STANDBY', '30-04-17 22:00');
@@ -132,14 +132,14 @@ INSERT INTO power_consumption VALUES(4,201,1002,42,'tv', 50 1493589600, 'STANDBY
 
 
 INSERT INTO power_consumption VALUES(4,201,1002,43,'washer', 0, 1493510460, 'OFF', '30-04-17 00:01');
-INSERT INTO power_consumption VALUES(4,201,1002,43,'washer', 0, 1493541000, 'STANBY', '30-04-17 8:30');
+INSERT INTO power_consumption VALUES(4,201,1002,43,'washer', 0, 1493541000, 'STANDBY', '30-04-17 8:30');
 INSERT INTO power_consumption VALUES(4,201,1002,43,'washer', 3, 1493577000, 'ON', '30-04-17 18:30');
 INSERT INTO power_consumption VALUES(4,201,1002,43,'washer', 40, 1493578800, 'STANDBY', '30-04-17 19:00');
 INSERT INTO power_consumption VALUES(4,201,1002,43,'washer', 2, 1493582400, 'OFF', '30-04-17 20:00');
 
 
 DOM 5, ULICA 2_1, DZIELNICA 2 - fin
-INSERT INTO power_consumption VALUES(5,201,1002,51,'lightbulb', 1, 1493510460, 'OFF', '30-04-17 0:01');
+INSERT INTO power_consumption VALUES(5,201,1002,51,'lightbulb', 0, 1493510460, 'OFF', '30-04-17 0:01');
 INSERT INTO power_consumption VALUES(5,201,1002,51,'lightbulb', 0, 1493535600, 'ON', '30-04-17 7:00');
 INSERT INTO power_consumption VALUES(5,201,1002,51,'lightbulb', 1.5, 1493539200, 'OFF', '30-04-17 8:00');
 INSERT INTO power_consumption VALUES(5,201,1002,51,'lightbulb', 0, 1493542800, 'ON', '30-04-17 9:00');

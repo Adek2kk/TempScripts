@@ -1,0 +1,253 @@
+MATCH (n)
+OPTIONAL MATCH (n)-[r]-()
+DELETE n,r
+
+CREATE (U1: {id_home: , id_street: , id_district: , id_device: , timestamp_epoch: , date_varchar:}), 
+(U1)-[: {power_consum:}]->(U2),
+
+
+DOM 1, ULICA 1_1, DZIELNICA 1
+CREATE (U1:lightbulb {id_home:1 , id_street:101 , id_district:1001 , id_device:11 , timestamp_epoch:1493510460 , date_varchar:'30-04-17 0:01'}),
+(U2:lightbulb {id_home:1 , id_street:101 , id_district:1001 , id_device:11 , timestamp_epoch:1493535600 , date_varchar:'30-04-17 7:00'}),
+(U3:lightbulb {id_home:1 , id_street:101 , id_district:1001 , id_device:11 , timestamp_epoch:1493539200 , date_varchar:'30-04-17 8:00'}),
+(U4:lightbulb {id_home:1 , id_street:101 , id_district:1001 , id_device:11 , timestamp_epoch:1493546400 , date_varchar:'30-04-17 10:00'}),
+(U5:lightbulb {id_home:1 , id_street:101 , id_district:1001 , id_device:11 , timestamp_epoch:1493550000 , date_varchar:'30-04-17 11:00'}),
+(U6:lightbulb {id_home:1 , id_street:101 , id_district:1001 , id_device:11 , timestamp_epoch:1493553600 , date_varchar:'30-04-17 12:00'}),
+(U7:lightbulb {id_home:1 , id_street:101 , id_district:1001 , id_device:11 , timestamp_epoch:1493557200 , date_varchar:'30-04-17 13:00'}),
+(U8:lightbulb {id_home:1 , id_street:101 , id_district:1001 , id_device:11 , timestamp_epoch:1493568000 , date_varchar:'30-04-17 16:00'}),
+(U9:lightbulb {id_home:1 , id_street:101 , id_district:1001 , id_device:11 , timestamp_epoch:1493568900 , date_varchar:'30-04-17 16:15'}),
+(U10:lightbulb {id_home:1 , id_street:101 , id_district:1001 , id_device:11 , timestamp_epoch:1493575200 , date_varchar:'30-04-17 18:00'}),
+(U11:lightbulb {id_home:1 , id_street:101 , id_district:1001 , id_device:11 , timestamp_epoch:1493596740 , date_varchar:'30-04-17 23:59'}),
+		(U1)-[:OFF {power_consum:0}]->(U2),
+		(U2)-[:ON {power_consum:1}]->(U3),
+		(U3)-[:OFF {power_consum:0}]->(U4),
+		(U4)-[:ON {power_consum:1}]->(U5),
+		(U5)-[:OFF {power_consum:0}]->(U6),
+		(U6)-[:ON {power_consum:1}]->(U7),
+		(U7)-[:OFF {power_consum:0}]->(U8),
+		(U8)-[:ON {power_consum:1}]->(U9),
+		(U9)-[:OFF {power_consum:0}]->(U10),
+		(U10)-[:ON {power_consum:6}]->(U11);
+		
+CREATE  
+(U1:tv {id_home:1 , id_street:101 , id_district:1001 , id_device:12 , timestamp_epoch:1493510460 , date_varchar:'30-04-17 0:01'}),
+(U2:tv {id_home:1 , id_street:101 , id_district:1001 , id_device:12 , timestamp_epoch:1493535600 , date_varchar:'30-04-17 7:00'}),
+(U3:tv {id_home:1 , id_street:101 , id_district:1001 , id_device:12 , timestamp_epoch:1493550000 , date_varchar:'30-04-17 11:00'}),
+(U4:tv {id_home:1 , id_street:101 , id_district:1001 , id_device:12 , timestamp_epoch:1493564400 , date_varchar:'30-04-17 15:00'}),
+(U5:tv {id_home:1 , id_street:101 , id_district:1001 , id_device:12 , timestamp_epoch:1493568000 , date_varchar:'30-04-17 16:00'}),
+(U6:tv {id_home:1 , id_street:101 , id_district:1001 , id_device:12 , timestamp_epoch:1493578800 , date_varchar:'30-04-17 19:00'}),
+(U7:tv {id_home:1 , id_street:101 , id_district:1001 , id_device:12 , timestamp_epoch:1493589600 , date_varchar:'30-04-17 22:00'}),
+(U8:tv {id_home:1 , id_street:101 , id_district:1001 , id_device:12 , timestamp_epoch:1493593200 , date_varchar:'30-04-17 23:00'}),
+		(U1)-[:OFF {power_consum:0}]->(U2),
+		(U2)-[:ON {power_consum:16}]->(U3),
+		(U3)-[:STANDBY {power_consum:0.2}]->(U4),
+		(U4)-[:ON {power_consum:4}]->(U5),
+		(U5)-[:STANDBY {power_consum:0.2}]->(U6),
+		(U6)-[:ON {power_consum:12}]->(U7),
+		(U7)-[:STANDBY {power_consum:0.1}]->(U8);
+		
+CREATE 
+(U1:washer {id_home:1 , id_street:101 , id_district:1001 , id_device:13 , timestamp_epoch:1493510460 , date_varchar:'30-04-17 00:01'}),
+(U2:washer {id_home:1 , id_street:101 , id_district:1001 , id_device:13 , timestamp_epoch:1493551800 , date_varchar:'30-04-17 11:30'}),
+(U3:washer {id_home:1 , id_street:101 , id_district:1001 , id_device:13 , timestamp_epoch:1493553600 , date_varchar:'30-04-17 12:00'}),
+(U4:washer {id_home:1 , id_street:101 , id_district:1001 , id_device:13 , timestamp_epoch:1493555400 , date_varchar:'30-04-17 12:30'}),
+(U5:washer {id_home:1 , id_street:101 , id_district:1001 , id_device:13 , timestamp_epoch:1493557200 , date_varchar:'30-04-17 13:00'}), 
+	(U1)-[:OFF {power_consum:0}]->(U2),
+	(U2)-[:ON {power_consum:20}]->(U3),
+	(U3)-[:STANDBY {power_consum:0.2}]->(U4),
+	(U4)-[:ON {power_consum:20}]->(U5);
+	
+
+DOM 2, ULICA 1_1, DZIELNICA 1
+
+CREATE 
+(U1:lightbulb {id_home:2 , id_street:101 , id_district:1001 , id_device:21 , timestamp_epoch:1493510460 , date_varchar:'30-04-17 0:01'}),
+(U2:lightbulb {id_home:2 , id_street:101 , id_district:1001 , id_device:21 , timestamp_epoch:1493578800 , date_varchar:'30-04-17 19:00'}),
+(U3:lightbulb {id_home:2 , id_street:101 , id_district:1001 , id_device:21 , timestamp_epoch:1493582400 , date_varchar:'30-04-17 20:00'}),
+(U4:lightbulb {id_home:2 , id_street:101 , id_district:1001 , id_device:21 , timestamp_epoch:1493583300 , date_varchar:'30-04-17 20:15'}),
+(U5:lightbulb {id_home:2 , id_street:101 , id_district:1001 , id_device:21 , timestamp_epoch:1493584200 , date_varchar:'30-04-17 20:30'}),
+(U6:lightbulb {id_home:2 , id_street:101 , id_district:1001 , id_device:21 , timestamp_epoch:1493586000 , date_varchar:'30-04-17 21:00'}),
+(U7:lightbulb {id_home:2 , id_street:101 , id_district:1001 , id_device:21 , timestamp_epoch:1493593200 , date_varchar:'30-04-17 23:00'}), 
+	(U1)-[:OFF {power_consum:0}]->(U2),
+	(U2)-[:ON {power_consum:2}]->(U3),
+	(U3)-[:OFF {power_consum:0}]->(U4),
+	(U4)-[:ON {power_consum:1}]->(U5),
+	(U5)-[:OFF {power_consum:0}]->(U6),
+	(U6)-[:ON {power_consum:4}]->(U7);
+
+CREATE 
+(U1:tv {id_home:2 , id_street:101 , id_district:1001 , id_device:22 , timestamp_epoch:1493510460 , date_varchar:'30-04-17 0:01'}), 
+(U2:tv {id_home:2 , id_street:101 , id_district:1001 , id_device:22 , timestamp_epoch:1493542800 , date_varchar:'30-04-17 9:00'}),
+(U3:tv {id_home:2 , id_street:101 , id_district:1001 , id_device:22 , timestamp_epoch:1493571600 , date_varchar:'30-04-17 17:00'}),
+(U4:tv {id_home:2 , id_street:101 , id_district:1001 , id_device:22 , timestamp_epoch:1493578800 , date_varchar:'30-04-17 19:00'}),
+(U5:tv {id_home:2 , id_street:101 , id_district:1001 , id_device:22 , timestamp_epoch:1493593200 , date_varchar:'30-04-17 23:00'}),
+	(U1)-[:OFF {power_consum:0}]->(U2),
+	(U2)-[:ON {power_consum:45}]->(U3),
+	(U3)-[:STANDBY {power_consum:0.5}]->(U4),
+	(U4)-[:ON {power_consum:25}]->(U5);
+	
+CREATE 
+(U1:washer {id_home:2 , id_street:101 , id_district:1001 , id_device:23 , timestamp_epoch:1493510460 , date_varchar:'30-04-17 00:01'}), 
+(U2:washer {id_home:2 , id_street:101 , id_district:1001 , id_device:23 , timestamp_epoch:1493541000 , date_varchar:'30-04-17 8:30'}),
+(U3:washer {id_home:2 , id_street:101 , id_district:1001 , id_device:23 , timestamp_epoch:1493559000 , date_varchar:'30-04-17 13:30'}),
+(U4:washer {id_home:2 , id_street:101 , id_district:1001 , id_device:23 , timestamp_epoch:1493560800 , date_varchar:'30-04-17 14:00'}),
+(U5:washer {id_home:2 , id_street:101 , id_district:1001 , id_device:23 , timestamp_epoch:1493575200 , date_varchar:'30-04-17 18:00'}),
+	(U1)-[:OFF {power_consum:0}]->(U2),
+	(U2)-[:STANDBY {power_consum:2}]->(U3),
+	(U3)-[:ON {power_consum:40}]->(U4),
+	(U4)-[:STANDBY {power_consum:2}]->(U5);
+
+
+
+
+DOM 3, ULICA 1_1, DZIELNICA 1	
+
+CREATE 
+(U1:lightbulb {id_home:3 , id_street:101 , id_district:1001 , id_device:31 , timestamp_epoch:1493510460 , date_varchar:'30-04-17 0:01'}), 
+(U2:lightbulb {id_home:3 , id_street:101 , id_district:1001 , id_device:31 , timestamp_epoch:1493578800 , date_varchar:'30-04-17 19:00'}), 
+(U3:lightbulb {id_home:3 , id_street:101 , id_district:1001 , id_device:31 , timestamp_epoch:1493582400 , date_varchar:'30-04-17 20:00'}), 
+(U4:lightbulb {id_home:3 , id_street:101 , id_district:1001 , id_device:31 , timestamp_epoch:1493583300 , date_varchar:'30-04-17 20:15'}), 
+(U5:lightbulb {id_home:3 , id_street:101 , id_district:1001 , id_device:31 , timestamp_epoch:1493584200 , date_varchar:'30-04-17 20:30'}), 
+(U6:lightbulb {id_home:3 , id_street:101 , id_district:1001 , id_device:31 , timestamp_epoch:1493586000 , date_varchar:'30-04-17 21:00'}), 
+(U7:lightbulb {id_home:3 , id_street:101 , id_district:1001 , id_device:31 , timestamp_epoch:1493593200 , date_varchar:'30-04-17 23:00'}), 
+	(U1)-[:OFF {power_consum:0}]->(U2),
+	(U2)-[:ON {power_consum:2}]->(U3),
+	(U3)-[:OFF {power_consum:0}]->(U4),
+	(U4)-[:ON {power_consum:1}]->(U5),
+	(U5)-[:OFF {power_consum:0}]->(U6),
+	(U6)-[:ON {power_consum:4}]->(U7);
+	
+CREATE 
+(U1:tv {id_home:3 , id_street:101 , id_district:1001 , id_device:32 , timestamp_epoch:1493517600 , date_varchar:'30-04-17 2:00'}),
+(U2:tv {id_home:3 , id_street:101 , id_district:1001 , id_device:32 , timestamp_epoch:1493550000 , date_varchar:'30-04-17 11:00'}),
+(U3:tv {id_home:3 , id_street:101 , id_district:1001 , id_device:32 , timestamp_epoch:1493557200 , date_varchar:'30-04-17 13:00'}),
+(U4:tv {id_home:3 , id_street:101 , id_district:1001 , id_device:32 , timestamp_epoch:1493564400 , date_varchar:'30-04-17 15:00'}),
+(U5:tv {id_home:3 , id_street:101 , id_district:1001 , id_device:32 , timestamp_epoch:1493566200 , date_varchar:'30-04-17 15:30'}),
+(U6:tv {id_home:3 , id_street:101 , id_district:1001 , id_device:32 , timestamp_epoch:1493572500 , date_varchar:'30-04-17 17:15'}),
+(U7:tv {id_home:3 , id_street:101 , id_district:1001 , id_device:32 , timestamp_epoch:1493573100 , date_varchar:'30-04-17 17:25'}),
+(U8:tv {id_home:3 , id_street:101 , id_district:1001 , id_device:32 , timestamp_epoch:1493578800 , date_varchar:'30-04-17 19:00'}),
+(U9:tv {id_home:3 , id_street:101 , id_district:1001 , id_device:32 , timestamp_epoch:1493593200 , date_varchar:'30-04-17 23:00'}),
+	(U1)-[:STANDBY {power_consum:3}]->(U2),
+	(U2)-[:ON {power_consum:20}]->(U3),
+	(U3)-[:STANDBY {power_consum:1}]->(U4),
+	(U4)-[:ON {power_consum:5}]->(U5),
+	(U5)-[:STANDBY {power_consum:1}]->(U6),
+	(U6)-[:ON {power_consum:5}]->(U7),
+	(U7)-[:STANDBY {power_consum:1}]->(U8),
+	(U8)-[:ON {power_consum:40}]->(U9);
+	
+	
+CREATE 
+(U1:washer {id_home:3 , id_street:101 , id_district:1001 , id_device:33 , timestamp_epoch:1493517600 , date_varchar:'30-04-17 2:00'}), 
+(U2:washer {id_home:3 , id_street:101 , id_district:1001 , id_device:33 , timestamp_epoch:1493542800 , date_varchar:'30-04-17 9:00'}),
+(U3:washer {id_home:3 , id_street:101 , id_district:1001 , id_device:33 , timestamp_epoch:1493544600 , date_varchar:'30-04-17 9:30'}),
+(U4:washer {id_home:3 , id_street:101 , id_district:1001 , id_device:33 , timestamp_epoch:1493546400 , date_varchar:'30-04-17 10:00'}),
+(U5:washer {id_home:3 , id_street:101 , id_district:1001 , id_device:33 , timestamp_epoch:1493548200 , date_varchar:'30-04-17 10:30'}),
+(U6:washer {id_home:3 , id_street:101 , id_district:1001 , id_device:33 , timestamp_epoch:1493560800 , date_varchar:'30-04-17 14:00'}),
+(U7:washer {id_home:3 , id_street:101 , id_district:1001 , id_device:33 , timestamp_epoch:1493563200 , date_varchar:'30-04-17 14:40'}),
+	(U1)-[:OFF {power_consum:0}]->(U2),
+	(U2)-[:ON {power_consum:35}]->(U3),
+	(U3)-[:STANDBY {power_consum:1}]->(U4),
+	(U4)-[:ON {power_consum:35}]->(U5),
+	(U5)-[:STANDBY {power_consum:1}]->(U6),
+	(U6)-[:ON {power_consum:35}]->(U7);
+	
+
+	
+
+DOM 4, ULICA 2_1, DZIELNICA 2
+
+CREATE 
+(U1:lightbulb {id_home:4 , id_street:201 , id_district:1002 , id_device:41 , timestamp_epoch:1493510460 , date_varchar:'30-04-17 0:01'}),
+(U2:lightbulb {id_home:4 , id_street:201 , id_district:1002 , id_device:41 , timestamp_epoch:1493532000 , date_varchar:'30-04-17 6:00'}),
+(U3:lightbulb {id_home:4 , id_street:201 , id_district:1002 , id_device:41 , timestamp_epoch:1493539200 , date_varchar:'30-04-17 8:00'}),
+(U4:lightbulb {id_home:4 , id_street:201 , id_district:1002 , id_device:41 , timestamp_epoch:1493582400 , date_varchar:'30-04-17 20:00'}),
+(U5:lightbulb {id_home:4 , id_street:201 , id_district:1002 , id_device:41 , timestamp_epoch:1493587800 , date_varchar:'30-04-17 21:30'}),
+(U6:lightbulb {id_home:4 , id_street:201 , id_district:1002 , id_device:41 , timestamp_epoch:1493589600 , date_varchar:'30-04-17 22:00'}),
+(U7:lightbulb {id_home:4 , id_street:201 , id_district:1002 , id_device:41 , timestamp_epoch:1493593200 , date_varchar:'30-04-17 23:00'}), 
+	(U1)-[:OFF {power_consum:0}]->(U2),
+	(U2)-[:ON {power_consum:2}]->(U3),
+	(U3)-[:OFF {power_consum:0}]->(U4),
+	(U4)-[:ON {power_consum:3}]->(U5),
+	(U5)-[:OFF {power_consum:0}]->(U6),
+	(U6)-[:ON {power_consum:2}]->(U7);
+	
+
+CREATE
+(U1:tv {id_home:4 , id_street:201 , id_district:1002 , id_device:42 , timestamp_epoch:1493510460 , date_varchar:'30-04-17 0:01'}), 
+(U2:tv {id_home:4 , id_street:201 , id_district:1002 , id_device:42 , timestamp_epoch:1493542800 , date_varchar:'30-04-17 9:00'}),
+(U3:tv {id_home:4 , id_street:201 , id_district:1002 , id_device:42 , timestamp_epoch:1493564400 , date_varchar:'30-04-17 15:00'}),
+(U4:tv {id_home:4 , id_street:201 , id_district:1002 , id_device:42 , timestamp_epoch:1493575200 , date_varchar:'30-04-17 18:00'}),
+(U5:tv {id_home:4 , id_street:201 , id_district:1002 , id_device:42 , timestamp_epoch:1493589600 , date_varchar:'30-04-17 22:00'}),
+	(U1)-[:STANDBY {power_consum:3}]->(U2),
+	(U2)-[:ON {power_consum:40}]->(U3),
+	(U3)-[:STANDBY {power_consum:1.5}]->(U4),
+	(U4)-[:ON {power_consum:50}]->(U5);
+
+
+CREATE
+(U1:washer {id_home:4 , id_street:201 , id_district:1002 , id_device:43 , timestamp_epoch:1493510460 , date_varchar:'30-04-17 00:01'}),
+(U2:washer {id_home:4 , id_street:201 , id_district:1002 , id_device:43 , timestamp_epoch:1493541000 , date_varchar:'30-04-17 8:30'}), 
+(U3:washer {id_home:4 , id_street:201 , id_district:1002 , id_device:43 , timestamp_epoch:1493577000 , date_varchar:'30-04-17 18:30'}), 
+(U4:washer {id_home:4 , id_street:201 , id_district:1002 , id_device:43 , timestamp_epoch:1493578800 , date_varchar:'30-04-17 19:00'}), 
+(U5:washer {id_home:4 , id_street:201 , id_district:1002 , id_device:43 , timestamp_epoch:1493582400 , date_varchar:'30-04-17 20:00'}),  
+	(U1)-[:OFF {power_consum:0}]->(U2),
+	(U2)-[:STANDBY {power_consum:3}]->(U3),
+	(U3)-[:ON {power_consum:40}]->(U4),
+	(U4)-[:STANDBY {power_consum:2}]->(U5);
+
+	
+
+DOM 5, ULICA 2_1, DZIELNICA 2
+
+CREATE
+(U1:lightbulb {id_home:5 , id_street:201 , id_district:1002 , id_device:51 , timestamp_epoch:1493510460 , date_varchar:'30-04-17 0:01'}), 
+(U2:lightbulb {id_home:5 , id_street:201 , id_district:1002 , id_device:51 , timestamp_epoch:1493535600 , date_varchar:'30-04-17 7:00'}), 
+(U3:lightbulb {id_home:5 , id_street:201 , id_district:1002 , id_device:51 , timestamp_epoch:1493539200 , date_varchar:'30-04-17 8:00'}), 
+(U4:lightbulb {id_home:5 , id_street:201 , id_district:1002 , id_device:51 , timestamp_epoch:1493542800 , date_varchar:'30-04-17 9:00'}), 
+(U5:lightbulb {id_home:5 , id_street:201 , id_district:1002 , id_device:51 , timestamp_epoch:1493550000 , date_varchar:'30-04-17 11:00'}), 
+(U6:lightbulb {id_home:5 , id_street:201 , id_district:1002 , id_device:51 , timestamp_epoch:1493555400 , date_varchar:'30-04-17 12:30'}), 
+(U7:lightbulb {id_home:5 , id_street:201 , id_district:1002 , id_device:51 , timestamp_epoch:1493557200 , date_varchar:'30-04-17 13:00'}), 
+(U8:lightbulb {id_home:5 , id_street:201 , id_district:1002 , id_device:51 , timestamp_epoch:1493568000 , date_varchar:'30-04-17 16:00'}), 
+(U9:lightbulb {id_home:5 , id_street:201 , id_district:1002 , id_device:51 , timestamp_epoch:1493568900 , date_varchar:'30-04-17 16:15'}), 
+(U10:lightbulb {id_home:5 , id_street:201 , id_district:1002 , id_device:51 , timestamp_epoch:1493575200 , date_varchar:'30-04-17 18:00'}), 
+(U11:lightbulb {id_home:5 , id_street:201 , id_district:1002 , id_device:51 , timestamp_epoch:1493596740 , date_varchar:'30-04-17 23:59'}), 
+	(U1)-[:OFF {power_consum:0}]->(U2),
+	(U2)-[:ON {power_consum:1.5}]->(U3),
+	(U3)-[:OFF {power_consum:0}]->(U4),
+	(U4)-[:ON {power_consum:3}]->(U5),
+	(U5)-[:OFF {power_consum:0}]->(U6),
+	(U6)-[:ON {power_consum:1.5}]->(U7),
+	(U7)-[:OFF {power_consum:0}]->(U8),
+	(U8)-[:ON {power_consum:0.5}]->(U9),
+	(U9)-[:OFF {power_consum:0}]->(U10),
+	(U10)-[:ON {power_consum:8}]->(U11);
+	
+	
+CREATE
+(U1:tv {id_home:5 , id_street:201 , id_district:1002 , id_device:52 , timestamp_epoch:1493510460 , date_varchar:'30-04-17 0:01'}), 
+(U2:tv {id_home:5 , id_street:201 , id_district:1002 , id_device:52 , timestamp_epoch:1493535600 , date_varchar:'30-04-17 7:00'}),
+(U3:tv {id_home:5 , id_street:201 , id_district:1002 , id_device:52 , timestamp_epoch:1493550900 , date_varchar:'30-04-17 11:15'}),
+(U4:tv {id_home:5 , id_street:201 , id_district:1002 , id_device:52 , timestamp_epoch:1493564400 , date_varchar:'30-04-17 15:00'}),
+(U5:tv {id_home:5 , id_street:201 , id_district:1002 , id_device:52 , timestamp_epoch:1493568000 , date_varchar:'30-04-17 16:00'}),
+(U6:tv {id_home:5 , id_street:201 , id_district:1002 , id_device:52 , timestamp_epoch:1493578800 , date_varchar:'30-04-17 19:00'}),
+(U7:tv {id_home:5 , id_street:201 , id_district:1002 , id_device:52 , timestamp_epoch:1493590500 , date_varchar:'30-04-17 22:15'}),
+(U8:tv {id_home:5 , id_street:201 , id_district:1002 , id_device:52 , timestamp_epoch:1493593200 , date_varchar:'30-04-17 23:00'}),
+	(U1)-[:OFF {power_consum:0}]->(U2),
+	(U2)-[:ON {power_consum:25}]->(U3),
+	(U3)-[:STANDBY {power_consum:0.2}]->(U4),
+	(U4)-[:ON {power_consum:8}]->(U5),
+	(U5)-[:STANDBY {power_consum:0.3}]->(U6),
+	(U6)-[:ON {power_consum:20}]->(U7),
+	(U7)-[:STANDBY {power_consum:0.1}]->(U8);
+	
+CREATE
+(U1:washer {id_home:5 , id_street:201 , id_district:1002 , id_device:53 , timestamp_epoch:1493510460 , date_varchar:'30-04-17 00:01'}),
+(U2:washer {id_home:5 , id_street:201 , id_district:1002 , id_device:53 , timestamp_epoch:1493550000 , date_varchar:'30-04-17 11:00'}),
+(U3:washer {id_home:5 , id_street:201 , id_district:1002 , id_device:53 , timestamp_epoch:1493551800 , date_varchar:'30-04-17 11:30'}),
+(U4:washer {id_home:5 , id_street:201 , id_district:1002 , id_device:53 , timestamp_epoch:1493555400 , date_varchar:'30-04-17 12:30'}),
+(U5:washer {id_home:5 , id_street:201 , id_district:1002 , id_device:53 , timestamp_epoch:1493557200 , date_varchar:'30-04-17 13:00'}), 
+	(U1)-[:OFF {power_consum:0}]->(U2),
+	(U2)-[:ON {power_consum:15}]->(U3),
+	(U3)-[:STANDBY {power_consum:0.4}]->(U4),
+	(U4)-[:ON {power_consum:15}]->(U5);
