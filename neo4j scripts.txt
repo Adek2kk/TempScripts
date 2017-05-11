@@ -1,0 +1,48 @@
+CREATE (DOM:home {id_seq:1,id_person:1,id_place:1,timestmp:"01-01-2017 07:00"}),
+		(P1:bus_stop {id_seq:1,id_person:1,id_place:2,timestmp:"01-01-2017 07:05"}),
+		(P1_2:bus_stop {id_seq:1,id_person:1,id_place:2,timestmp:"01-01-2017 07:10"}),
+		(P2:bus_stop {id_seq:1,id_person:1,id_place:3,timestmp:"01-01-2017 07:40"}),
+		(P3:tram_stop {id_seq:1,id_person:1,id_place:4,timestmp:"01-01-2017 07:45"}),
+		(P3_2:tram_stop {id_seq:1,id_person:1,id_place:4,timestmp:"01-01-2017 07:47"}),
+		(P4:tram_stop {id_seq:1,id_person:1,id_place:6,timestmp:"01-01-2017 07:54"}),
+		(WORK:workplace {id_seq:1,id_person:1,id_place:7,timestmp:"01-01-2017 07:59"}),
+		(DOM )-[:distance {num_measure: 200,unit:"m"}]->(P1),
+		(P1 )-[:waiting {num_measure: 5,unit:"min"}]->(P1_2),
+		(P1_2 )-[:stops {num_measure: 5,unit:"stops"}]->(P2),
+		(P2 )-[:distance {num_measure: 100,unit:"m"}]->(P3),
+		(P3 )-[:waiting {num_measure: 2,unit:"min"}]->(P3_2),
+		(P3_2 )-[:stops {num_measure: 2,unit:"stops"}]->(P4),
+		(P4 )-[:distance {num_measure: 400,unit:"m"}]->(WORK);
+		
+		
+CREATE (DOM:home {id_seq:2,id_person:2,id_place:8,timestmp:"02-02-2017 07:00"}),
+		(P1:bus_stop {id_seq:2,id_person:2,id_place:9,timestmp:"02-02-2017 07:05"}),
+		(P1_2:bus_stop {id_seq:2,id_person:2,id_place:9,timestmp:"02-02-2017 07:20"}),
+		(P2:bus_stop {id_seq:2,id_person:2,id_place:10,timestmp:"02-02-2017 07:40"}),
+		(P3:tram_stop {id_seq:2,id_person:2,id_place:11,timestmp:"02-02-2017 07:45"}),
+		(P3_2:tram_stop {id_seq:2,id_person:2,id_place:11,timestmp:"02-02-2017 07:47"}),
+		(P4:tram_stop {id_seq:2,id_person:2,id_place:12,timestmp:"02-02-2017 07:54"}),
+		(WORK:workplace {id_seq:2,id_person:2,id_place:13,timestmp:"02-02-2017 07:59"}),
+		(DOM )-[:distance {num_measure: 2000,unit:"m"}]->(P1),
+		(P1 )-[:waiting {num_measure: 50,unit:"min"}]->(P1_2),
+		(P1_2 )-[:stops {num_measure: 50,unit:"stops"}]->(P2),
+		(P2 )-[:distance {num_measure: 1000,unit:"m"}]->(P3),
+		(P3 )-[:waiting {num_measure: 20,unit:"min"}]->(P3_2),
+		(P3_2 )-[:stops {num_measure: 20,unit:"stops"}]->(P4),
+		(P4 )-[:distance {num_measure: 4000,unit:"m"}]->(WORK);
+		
+MATCH (n)-[r:distance]->(m)
+WHERE r.unit = "m"
+RETURN DISTINCT n.id_seq;
+
+MATCH (n:bus_stop)-[:waiting]-()-[:stops]-(m)
+RETURN n.id_seq, n.timestmp,m.timestmp;
+
+
+MATCH (n)-[r]->()
+WHERE n.id_seq = 1
+RETURN count(r);
+
+MATCH (n)-[r:waiting]->()
+WHERE n.id_seq = 1
+RETURN avg(r.num_measure);

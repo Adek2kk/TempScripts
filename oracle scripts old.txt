@@ -1,0 +1,56 @@
+SELECT *
+FROM Route MATCH_RECOGNIZE (
+     PARTITION BY id_seq
+     ORDER BY timestamp
+	 MEASURES  LAST(WAIT.timestamp) AS wait_stamp,
+               LAST(BUS.timestamp) AS ride_stamp
+     ONE ROW PER MATCH
+     AFTER MATCH SKIP TO LAST BUS
+     PATTERN (WAIT BUS)
+     DEFINE
+        WAIT AS WAIT.activity = 'waiting',
+        BUS AS BUS.activity = 'by_bus'
+     ) MR
+ORDER BY MR.id_seq, MR.wait_stamp;
+
+SELECT id_seq, activity, 
+   LEAD(activity, 1) OVER (PARTITION By id seq ORDER BY timestamp) AS "NextActivity" 
+   
+   
+   
+  SELECT * 
+  FROM NPATH ( 
+    ON route 
+    PARTITION BY id_seq 
+    ORDER BY timestamp ASC 
+    MODE ( NONOVERLAPPING ) 
+    PATTERN ( 'A.B' ) 
+    SYMBOLS ( 'true' AS X, 
+              activity = `waiting` AS A, 
+              activity = 'by_bus' AS B, 
+              ) 
+    RESULT ( 
+			id_seq, 
+            FIRST ( activity OF A ) AS activity1, 
+            FIRST ( activity OF B ) AS activity2 
+           ) 
+    ) 
+ 
+ CREATE TABLE route {
+ 
+	id_seq NUMBER(20),
+	id_person NUMBER(20),
+	timestmp TIMESTAMP,
+	id_place NUMBER(20),
+	activity VARCHAR2(200),
+	num_measure NUMBER(20)
+ }
+ 
+ INSERT INTO route VALUES (1,1,TO_TIMESTAMP(`2016-12-12 12:12:12`, `YYYY-MM-DD HH24:MI:SS`),20,`waiting`,30); 
+ 
+ SELECT DISTINCT id_seq, sum(num_measure) OVER (PARTITION BY id_seq) FROM route WHERE activity = `waiting`;
+ 
+ SELECT id_seq, SUM(num_measure) OVER (PARTITION BY id_seq ORDER BY timestmp ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING) 
+   FROM route WHERE activity = `waiting`;
+   
+ SELECT timestmp, id_street, type_device, count(*) FROM power_consumption GROUP BY timestmp, id_street, type_device
