@@ -65,9 +65,6 @@ INSERT INTO route VALUES(13,201,'worker','bus_stop','bus_ride',10,'stops',149353
 INSERT INTO route VALUES(13,211,'worker','bus_stop','walking',750,'m',1493538000,'30-04-17 7:40');
 INSERT INTO route VALUES(13,10,'worker','work_place_1','end',null,null,1493538960,'30-04-17 7:56');
 
-
-INSERT INTO route VALUES(13,10,'worker','work_place_1','end',null,null,1493538960,'30-04-17 7:56');
-
 Worker 2_1
 INSERT INTO route VALUES(21,21,'worker','home','walking',150,'m',1493535420,'30-04-17 6:57');
 INSERT INTO route VALUES(21,107,'worker','bus_stop','waiting',2,'min',1493535660,'30-04-17 7:01');

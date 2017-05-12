@@ -1,0 +1,132 @@
+
+id_route, id_place, type_person, type_place, activity, num_measure, unit, timestamp_epoch, date_varchar 
+
+CREATE 
+(U1:home {id_route: , id_place: , type_person: , timestamp_epoch: , date_varchar: }),
+	(U1)-[: {num_measure: , unit: }]->(U2),
+
+Student 1
+CREATE
+(U1:home {id_route:31 , id_place:31 , type_person:'student' , timestamp_epoch:1493533800 , date_varchar:'30-04-17 6:30' }),
+(U2:bus_stop {id_route:31 , id_place:101 , type_person:'student' , timestamp_epoch:1493534100 , date_varchar:'30-04-17 6:35' }),
+(U3:bus_stop {id_route:31 , id_place:101 , type_person:'student' , timestamp_epoch:1493534580 , date_varchar:'30-04-17 6:43' }),
+(U4:bus_stop {id_route:31 , id_place:111 , type_person:'student' , timestamp_epoch:1493536980 , date_varchar:'30-04-17 7:23' }),
+(U5:tram_stop {id_route:31 , id_place:303 , type_person:'student' , timestamp_epoch:1493537220 , date_varchar:'30-04-17 7:27' }),
+(U6:tram_stop {id_route:31 , id_place:303 , type_person:'student' , timestamp_epoch:1493537760 , date_varchar:'30-04-17 7:36' }),
+(U7:tram_stop {id_route:31 , id_place:307 , type_person:'student' , timestamp_epoch:1493538360 , date_varchar:'30-04-17 7:46' }),
+(U8:university {id_route:31 , id_place:30 , type_person:'student' , timestamp_epoch:1493538600 , date_varchar:'30-04-17 7:50' }),
+	(U1)-[:walking {num_measure:400 , unit:'m' }]->(U2),
+	(U2)-[:waiting {num_measure:8 , unit:'min' }]->(U3),
+	(U3)-[:bus_ride {num_measure:10 , unit:'stops' }]->(U4),
+	(U4)-[:walking {num_measure:300 , unit:'m' }]->(U5),
+	(U5)-[:waiting {num_measure:9 , unit:'min' }]->(U6),
+	(U6)-[:bus_ride {num_measure:4 , unit:'stops' }]->(U7),
+	(U7)-[:walking {num_measure:250 , unit:'m' }]->(U8);
+	
+Student 2
+CREATE 
+(U1:home {id_route:32 , id_place:32 , type_person:'student' , timestamp_epoch:1493535900 , date_varchar:'30-04-17 7:05' }),
+(U2:homebike_station {id_route:32 , id_place:502 , type_person:'student' , timestamp_epoch:1493536200 , date_varchar:'30-04-17 7:10' }),
+(U3:bike_station {id_route:32 , id_place:501 , type_person:'student' , timestamp_epoch:1493537220 , date_varchar:'30-04-17 7:27' }),
+(U4:tram_stop {id_route:32 , id_place:303 , type_person:'student' , timestamp_epoch:1493537400 , date_varchar:'30-04-17 7:30' }),
+(U5:tram_stop {id_route:32 , id_place:303 , type_person:'student' , timestamp_epoch:1493537760 , date_varchar:'30-04-17 7:36' }),
+(U6:tram_stop {id_route:32 , id_place:307 , type_person:'student' , timestamp_epoch:1493538360 , date_varchar:'30-04-17 7:46' }),
+(U7:university {id_route:32 , id_place:30 , type_person:'student' , timestamp_epoch:1493538600 , date_varchar:'30-04-17 7:50' }),
+	(U1)-[:walking {num_measure:200 , unit:'m' }]->(U2),
+	(U2)-[:bike_ride {num_measure:2500 , unit:'m' }]->(U3),
+	(U3)-[:walking {num_measure:100 , unit:'m' }]->(U4),
+	(U4)-[:waiting {num_measure:6 , unit:'min' }]->(U5),
+	(U5)-[:tram_ride {num_measure:4 , unit:'stops' }]->(U6),
+	(U6)-[:walking {num_measure:250 , unit:'m' }]->(U7);
+	
+Student 3
+CREATE 
+(U1:home {id_route:33 , id_place:33 , type_person:'student' , timestamp_epoch:1493536080 , date_varchar:'30-04-17 7:08' }),
+(U2:bus_stop {id_route:33 , id_place:205 , type_person:'student' , timestamp_epoch:1493536200 , date_varchar:'30-04-17 7:10' }),
+(U3:bus_stop {id_route:33 , id_place:205 , type_person:'student' , timestamp_epoch:1493536260 , date_varchar:'30-04-17 7:11' }),
+(U4:bus_stop {id_route:33 , id_place:211 , type_person:'student' , timestamp_epoch:1493538000 , date_varchar:'30-04-17 7:40' }),
+(U5:bike_station {id_route:33 , id_place:503 , type_person:'student' , timestamp_epoch:1493538120 , date_varchar:'30-04-17 7:42' }),
+(U6:bike_station {id_route:33 , id_place:504 , type_person:'student' , timestamp_epoch:1493539020 , date_varchar:'30-04-17 7:57' }),
+(U7:university {id_route:33 , id_place:30 , type_person:'student' , timestamp_epoch:1493539140 , date_varchar:'30-04-17 7:59' }),
+	(U1)-[:walking {num_measure:100 , unit:'m' }]->(U2),
+	(U2)-[:waiting {num_measure:1 , unit:'min' }]->(U3),
+	(U3)-[:bus_ride {num_measure:6 , unit:'stops' }]->(U4),
+	(U4)-[:walking {num_measure:150 , unit:'m' }]->(U5),
+	(U5)-[:bike_ride {num_measure:2000 , unit:'m' }]->(U6),
+	(U6)-[:walking {num_measure:100 , unit:'m' }]->(U7);
+	
+Worker 1_1
+CREATE 
+(U1:home {id_route:11 , id_place:11 , type_person:'worker' , timestamp_epoch:1493533980 , date_varchar:'30-04-17 6:33' }),
+(U2:bus_stop {id_route:11 , id_place:101 , type_person:'worker' , timestamp_epoch:1493534460 , date_varchar:'30-04-17 6:41' }),
+(U3:bus_stop {id_route:11 , id_place:101 , type_person:'worker' , timestamp_epoch:1493534580 , date_varchar:'30-04-17 6:43' }),
+(U4:bus_stop {id_route:11 , id_place:111 , type_person:'worker' , timestamp_epoch:1493536980 , date_varchar:'30-04-17 7:23' }),
+(U5:tram_stop {id_route:11 , id_place:303 , type_person:'worker' , timestamp_epoch:1493537400 , date_varchar:'30-04-17 7:30' }),
+(U6:tram_stop {id_route:11 , id_place:303 , type_person:'worker' , timestamp_epoch:1493537760 , date_varchar:'30-04-17 7:36' }),
+(U7:tram_stop {id_route:11 , id_place:311 , type_person:'worker' , timestamp_epoch:1493538960 , date_varchar:'30-04-17 7:56' }),
+(U8:work_place_1 {id_route:11 , id_place:10 , type_person:'worker' , timestamp_epoch:1493539200 , date_varchar:'30-04-17 8:00' }),
+	(U1)-[:walking {num_measure:600 , unit:'m' }]->(U2),
+	(U2)-[:waiting {num_measure:2 , unit:'min' }]->(U3),
+	(U3)-[:bus_ride {num_measure:10 , unit:'stops' }]->(U4),
+	(U4)-[:walking {num_measure:300 , unit:'m' }]->(U5),
+	(U5)-[:waiting {num_measure:6 , unit:'min' }]->(U6),
+	(U6)-[:tram_ride {num_measure:8 , unit:'stops' }]->(U7),
+	(U7)-[:walking {num_measure:300 , unit:'m' }]->(U8);
+	
+Worker 1_2
+CREATE 
+(U1:home {id_route:12 , id_place:12 , type_person:'worker' , timestamp_epoch:1493535780 , date_varchar:'30-04-17 7:03' }),
+(U2:bike_station {id_route:12 , id_place:502 , type_person:'worker' , timestamp_epoch:1493536200 , date_varchar:'30-04-17 7:10' }),
+(U3:bike_station {id_route:12 , id_place:501 , type_person:'worker' , timestamp_epoch:1493537400 , date_varchar:'30-04-17 7:30' }),
+(U4:tram_stop {id_route:12 , id_place:303 , type_person:'worker' , timestamp_epoch:1493537520 , date_varchar:'30-04-17 7:32' }),
+(U5:tram_stop {id_route:12 , id_place:303 , type_person:'worker' , timestamp_epoch:1493537760 , date_varchar:'30-04-17 7:36' }),
+(U6:tram_stop {id_route:12 , id_place:311 , type_person:'worker' , timestamp_epoch:1493538960 , date_varchar:'30-04-17 7:56' }),
+(U7:work_place_1 {id_route:12 , id_place:10 , type_person:'worker' , timestamp_epoch:1493539200 , date_varchar:'30-04-17 8:00' }),
+	(U1)-[:walking {num_measure:350 , unit:'m' }]->(U2),
+	(U2)-[:bike_ride {num_measure:2700 , unit:'m' }]->(U3),
+	(U3)-[:walking {num_measure:100 , unit:'m' }]->(U4),
+	(U4)-[:waiting {num_measure:4 , unit:'min' }]->(U5),
+	(U5)-[:tram_ride {num_measure:8 , unit:'stops' }]->(U6),
+	(U6)-[:walking{num_measure:300 , unit:'m' }]->(U7);
+	
+Worker 1_3
+CREATE 
+(U1:home {id_route:13 , id_place:13 , type_person:'worker' , timestamp_epoch:1493535120 , date_varchar:'30-04-17 6:52' }),
+(U2:bus_stop {id_route:13 , id_place:201 , type_person:'worker' , timestamp_epoch:1493535420 , date_varchar:'30-04-17 6:57' }),
+(U3:bus_stop {id_route:13 , id_place:201 , type_person:'worker' , timestamp_epoch:1493535600 , date_varchar:'30-04-17 7:00' }),
+(U4:bus_stop {id_route:13 , id_place:211 , type_person:'worker' , timestamp_epoch:1493538000 , date_varchar:'30-04-17 7:40' }),
+(U5:work_place_1 {id_route:13 , id_place:10 , type_person:'worker' , timestamp_epoch:1493538960 , date_varchar:'30-04-17 7:56' }),
+	(U1)-[:walking {num_measure:150 , unit:'m' }]->(U2),
+	(U2)-[:waiting {num_measure:3 , unit:'min' }]->(U3),
+	(U3)-[:bus_ride {num_measure:10 , unit:'stops' }]->(U4),
+	(U4)-[:walking {num_measure:750 , unit:'m' }]->(U5);
+	
+Worker 2_1
+CREATE 
+(U1:home {id_route:21 , id_place:21 , type_person:'worker' , timestamp_epoch:1493535420 , date_varchar:'30-04-17 6:57' }),
+(U2:bus_stop {id_route:21 , id_place:107 , type_person:'worker' , timestamp_epoch:1493535660 , date_varchar:'30-04-17 7:01' }),
+(U3:bus_stop {id_route:21 , id_place:107 , type_person:'worker' , timestamp_epoch:1493535780 , date_varchar:'30-04-17 7:03' }),
+(U4:bus_stop {id_route:21 , id_place:116 , type_person:'worker' , timestamp_epoch:1493537760 , date_varchar:'30-04-17 7:36' }),
+(U5:tram_stop {id_route:21 , id_place:402 , type_person:'worker' , timestamp_epoch:1493537820 , date_varchar:'30-04-17 7:37' }),
+(U6:tram_stop {id_route:21 , id_place:402 , type_person:'worker' , timestamp_epoch:1493538060 , date_varchar:'30-04-17 7:41' }),
+(U7:tram_stop {id_route:21 , id_place:408 , type_person:'worker' , timestamp_epoch:1493539200 , date_varchar:'30-04-17 8:00' }),
+(U8:work_place_2 {id_route:21 , id_place:20 , type_person:'worker' , timestamp_epoch:1493539500 , date_varchar:'30-04-17 8:05' }),
+	(U1)-[:walking {num_measure:150 , unit:'m' }]->(U2),
+	(U2)-[:waiting {num_measure:2 , unit:'min' }]->(U3),
+	(U3)-[:bus_ride {num_measure:9 , unit:'stops' }]->(U4),
+	(U4)-[:walking {num_measure:50 , unit:'m' }]->(U5),
+	(U5)-[:waiting {num_measure:4 , unit:'min' }]->(U6),
+	(U6)-[:tram_ride {num_measure:8 , unit:'stops' }]->(U7),
+	(U7)-[:walking {num_measure:300 , unit:'m' }]->(U8);
+	
+Worker 2_2
+CREATE 
+(U1:home {id_route:22 , id_place:22 , type_person:'worker' , timestamp_epoch:1493536200 , date_varchar:'30-04-17 7:10' }),
+(U2:tram_stop {id_route:22 , id_place:402 , type_person:'worker' , timestamp_epoch:1493537760 , date_varchar:'30-04-17 7:36' }),
+(U3:tram_stop {id_route:22 , id_place:402 , type_person:'worker' , timestamp_epoch:1493538060 , date_varchar:'30-04-17 7:41' }),
+(U4:tram_stop {id_route:22 , id_place:406 , type_person:'worker' , timestamp_epoch:1493539200 , date_varchar:'30-04-17 8:00' }),
+(U5:work_place_2 {id_route:22 , id_place:20 , type_person:'worker' , timestamp_epoch:1493539500 , date_varchar:'30-04-17 8:05' }),
+	(U1)-[:walking {num_measure:1000 , unit:'m' }]->(U2),
+	(U2)-[:waiting {num_measure:5 , unit:'min' }]->(U3),
+	(U3)-[:tram_ride {num_measure:8 , unit:'stops' }]->(U4),
+	(U4)-[:walking {num_measure:300 , unit:'m' }]->(U5);
