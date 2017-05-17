@@ -1,0 +1,41 @@
+Konstrukcje
+
+CREATE 
+(U1:lightbulb {id_home:1 , id_street:101 , id_district:1001 , 
+                id_device:11 , timestamp_epoch:1493510460 ,
+                date_varchar:'30-04-17 0:01'}),
+(U2:lightbulb {id_home:1 , id_street:101 , id_district:1001 , 
+                id_device:11 , timestamp_epoch:1493535600 , 
+                date_varchar:'30-04-17 7:00'}),
+...
+		(U1)-[:OFF {power_consum:0}]->(U2),
+	    ...
+		(U10)-[:ON {power_consum:6}]->(U11);
+		
+Selekcja
+
+Własności sekwencji
+
+MATCH p= (n)-[r*]->(m) 
+WHERE NOT ( ()-[]->(n) OR (m)-[]->() ) 
+WITH 
+    n.id_device AS ID_DEVICE, 
+    length(p)+1 AS COUNT, 
+    REDUCE(sum=0, rel IN r | sum + rel.power_consum) AS SUM, 
+    REDUCE(count=0, rel IN r | count + 1) AS CT 
+RETURN ID_DEVICE, COUNT, SUM, SUM/CT AS AVG
+
+Wzorce
+
+MATCH (n)-[r1:bike_ride]->(k)-[r2:walking]->(t:tram_stop)
+RETURN n.id_route AS ID_ROUTE,n.date_varchar AS SEQ_TIME_START,t.date_varchar AS SEQ_TIME_END ;
+
+
+MATCH (n)-[r1:bike_ride]->(k)-[r2:walking]->(t:tram_stop) 
+RETURN n,labels(n),k,labels(k),t,labels(t),type(r1),type(r2);
+
+Agregacja sekwencji
+
+Grupowanie sekwencji
+
+Przekształcenie sekwencji

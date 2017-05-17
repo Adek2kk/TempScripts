@@ -1,0 +1,318 @@
+\chapter{Języki przetwarzania danych sekwencyjnych}
+W tym rozdziale przedstawione zostaną trzy języki umożliwiające przetwarzania sekwencji. Są to: SQL, Cypher oraz EPL. Każdy z tych języków udostępnia narzędzia pozwalające na przetwarzania sekwencji zdarzeń lub interwałów z pewnym ograniczeniami. W rozdziale przedstawione zostaną przykłady zapytań dotyczących tworzenia sekwencji, ograniczania wyszukiwanych sekwencji, agregacji, grupowania oraz wyszukiwania wzorców. W podsumowaniu języków zawarto, również informacje na temat braków oraz trudności w wykorzystaniu na jakie można się natknąć.
+
+\section{SQL}
+
+Język SQL można wykorzystać do przetwarzania sekwencji zdarzeń oraz w ograniczony sposób sekwencji interwałów. Sekwencje są przechowywane w relacyjnych tabelach. Podział krotek na sekwencję odbywa się za pomocą dodatkowego atrybutu co powoduje konieczność podawania tego atrybutu jako rozgraniczającego dane. Kolejnym minusem jest konieczność wyznaczenia atrybutu porządkującego dzięki, któremu możliwe będzie ułożenie krotek w odpowiedniej kolejności w sekwencji. Do tej operacji wykorzystuję się klauzule ORDER BY. Konstrukcje językowe przeznaczone są do przetwarzania sekwencji zdarzeń. Sekwencję interwałów wymagają większego nakładu pracy od programisty i nie są wbudowane w język.
+
+\subsection{Konstrukcja sekwencji}
+
+Tworzenie sekwencji za pomocą języka SQL w bazie Oracle sprowadza się do utworzenia tabeli, w której będą przechowywane sekwencję, a następnie wstawienie rekordów z danymi. W przykładzie \ref{sql:create} pokazano jak stworzyć tabele sekwencji zdarzeń dla omówionego wcześniej przykładu wraz ze wstawieniem danych. Należy jednak pamiętać, aby dane posiadały atrybut porządkowy jak np. data lub sztucznie wytworzony atrybut, w celu nadania kolejności wierszy podczas dalszego  przetwarzania. Tablę tworzy się za pomocą klauzuli CREATE TABLE z podaniem nazwy kolumn oraz ich typów. Wstawianie danych wykonuje się za pomocą klauzuli INSERT INTO z podaniem nazwy tabeli, nazwy kolumn do których zostaną wstawione dane oraz wartości danych.
+
+\begin{lstlisting}[language=sql,caption={Tworzenie tabeli i wstawianie},label={sql:create1}]
+ CREATE TABLE nazwa_tabeli {
+	nazwa_kolumny typ_kolumny wlasciwosci_kolumny
+ }
+ 
+ INSERT INTO nazwa_tabeli (nazwa_kolumny1,nazwa_kolumny2,...) VALUES (wartosc1, wartosc2, ...);  
+\end{lstlisting}
+
+\begin{lstlisting}[language=sql,caption={Tworzenie tabeli i wstawianie przykładowego zdarzenia},label={sql:create}]
+ CREATE TABLE route {
+	id_seq NUMBER(20),
+	id_person NUMBER(20),
+	timestmp TIMESTAMP,
+	id_place NUMBER(20),
+	activity VARCHAR2(200),
+	num_measure NUMBER(20)
+ }
+ 
+ INSERT INTO route VALUES (1,1,TO_TIMESTAMP(`2016-12-12 12:12:12`, `YYYY-MM-DD HH24:MI:SS`),20,`waiting`,30);  
+\end{lstlisting}
+
+\subsection{Warunki}
+W SQL możemy ograniczać dane za pomocą klauzuli WHERE. Pozwala ona w elastyczny sposób wybierać potrzebne krotki. Można np. ograniczyć obszar analizy do wybranych sekwencji, określonego typu sekwencji np.: sekwencję dotyczących danego rodzaju urządzeń. Klauzula umożliwia tworzenie złożonych ograniczeń za pomocą wyrażeń AND, OR, nawiasów służących do zagnieżdżania warunków oraz podzapytań. Dużą rolę w nakładaniu ograniczeń zależy od kolumn jakie posiadają dane. Bardziej złożone ograniczenia mogą niestety wymagać wykorzystania podzapytań co może zwiększyć trudność tworzenia zapytań do sekwencji oraz wymaga odpowiedniej wiedzy dotyczącej języka SQL. 
+
+\begin{lstlisting}[language=sql,caption={Ograniczenie danych},label={sql:where1}]
+ SELECT * FROM nazwa_tabeli WHERE warunki;
+\end{lstlisting}
+
+\begin{lstlisting}[language=sql,caption={Ograniczenie danych do sekwencji pierwszej oraz w drugim przypadku ograniczenie do wszystkich sekwencji dotyczących osoby o id 1 z uporządkowaniem wg id sekwencji i znacznika czasowego},label={sql:where}]
+ SELECT * FROM route WHERE id_seq = 1 ORDER BY id_seq, timestmp;
+ 
+ SELECT * FROM route WHERE id_person = 1 ORDER BY id_seq, timestmp;
+\end{lstlisting}
+
+\subsection{Wzorce}
+
+Funkcja MATCH\_RECOGNIZE jest nową funkcjonalności dodaną przez Oracle w wersji 12c. Pozwala ona na zdefiniowanie i wyszukanie wzorców w sekwencjach danych. Na działanie funkcji składa się kilka klauzul takich jak:
+\begin{itemize}
+\item PARTITION BY - określa według jakiego atrybutu dane będą dzielone na sekwencje,
+\item ORDER BY - określa atrybut porządkowy,
+\item MEASURES - pozwala zdefiniować jakie miary zostaną otrzymane z działania funkcji np. znaczniki czasowe początku spadku lub końca wzrostu wartości
+\item PATTERN - określa wzorzec zdefiniowany przez użytkownika taki jak 
+\item DEFINE - zawiera definicje zmiennych podanych we wzorcu - np zmienne UP oznacza, że wartość podanego atrybutu jest większa w stosunku do wartości tego atrybutu w poprzednim zdarzeniu w sekwencji.
+\item ONE ROW PER MATCH - w wyniku zapytania otrzymujemy pojedynczą krotkę dla każdego wyszukanego wzorca
+\item ALL ROW PER MATCH - w wyniku zapytania otrzymujemy wszystkie krotki należące do znalezionych dopasowań.
+\item AFTER MATCH SKIP TO LAST zmienna - po wyszukaniu wzorca, zaczyna wyszukiwanie kolejnego wzorca od ostatniej krotki przypisanej do zmiennej.
+\end{itemize}
+
+\begin{lstlisting}[language=sql,caption={Match\_recognize} , label={sql:pattern1}]
+    MATCH_RECOGNIZE (
+        PARTITION BY nazwa_kolumny
+        ORDER BY nazwa_kolumny
+	      MEASURES 
+	        definicja_miary1 AS nazwa_miary1,
+	        definicja_miary2 AS nazwa_miary2,
+	        ...
+	        definicja_miaryn AS nazwa_miaryn,
+        ONE ROW PER MATCH/ALL ROW PER MATCH
+        [AFTER MATCH SKIP TO LAST zmienna]
+        PATTERN (wzorzec)
+        DEFINE
+            nazwa_zmiennej1 AS definicja_zmiennej1,
+            nazwa_zmiennej2 AS definicja_zmiennej2,
+            ...            
+            nazwa_zmiennejn AS definicja_zmiennejn
+        )
+\end{lstlisting}
+
+\begin{lstlisting}[language=sql,caption={Wykorzystania match\_recognize do wyszukania wzorca: oczekiwania przejazd} , label={sql:pattern}]
+SELECT *
+FROM Route MATCH_RECOGNIZE (
+        PARTITION BY id_seq
+        ORDER BY timestmp
+	      MEASURES LAST(WAIT.timestmp) AS wait_stamp,
+            LAST(BUS.timestmp) AS ride_stamp
+        ONE ROW PER MATCH
+        AFTER MATCH SKIP TO LAST BUS
+        PATTERN (WAIT{1} BUS{1})
+        DEFINE
+            WAIT AS WAIT.activity = `waiting`,
+            BUS AS BUS.activity = `by_bus`
+    ) MR
+ORDER BY MR.id_seq, MR.wait_stamp;
+\end{lstlisting}
+
+\subsection{Agregacja}
+Do wyliczeń agregacji można wykorzystać wbudowane funkcję analityczne. Ważnym jest jednak zachowanie podziału danych na sekwencję, dlatego czasami potrzebne jest wyliczenie miar np. średniej dla poszczególnych sekwencji, a następnie obliczenie agregacji dla wszystkich przetwarzanych sekwencji. Wymaga to wykorzystania podzapytania w klauzuli FROM oraz klauzuli OVER.
+
+Budowa klauzuli OVER została przedstawiona w przykładzie \ref{sql:over}, a poszczególne składowe oznaczają:
+\begin{itemize}
+\item PARTITION BY - określa według jakiego atrybutu dane będą dzielone na sekwencje,
+\item ORDER BY - określa atrybut porządkowy,
+\item klauzula\_okna - pozwala na zdefiniowanie okna, w którym będą ograniczane poprzednie i następne krotki danych
+\end{itemize}
+
+\begin{lstlisting}[language=sql,caption={Klauzula OVER.},label={sql:over}]
+funkcja_analityczna() OVER ([PARTITION BY nazwa_kolumny] [ORDER BY nazwa_kolumny][klauzula_okna])
+\end{lstlisting} 
+ 
+\begin{lstlisting}[language=sql,caption={Wyliczenie średniego czasu oczekiwania.},label={sql:agr_sum}]
+ SELECT AVG(avg_measure) FROM (SELECT DISTINCT id_seq, AVG(num_measure) OVER (PARTITION BY id_seq) as avg_measure
+ FROM route WHERE activity = `waiting`);
+\end{lstlisting}
+
+Innym przykładem agregacji mogą być agregacje zdarzeń o takim samym czasie wystąpienia np. suma poboru prądu w kolejnych jednostkach czasu. Przy takim podejściu, w wyniku działania zapytania otrzymamy nową sekwencję zdarzeń.
+
+Dużym problemem może być agregacja danych na podstawie przedziałów. Takiego typu agregację w niektórych przypadkach mogą być nie możliwe, mogą wymagać stworzenia złożonego zapytania albo wymagane będzie użycie PL/SQL w celu odpowiedniego przetwarzania krotek.
+
+\subsection{Ekstrakcja własności z sekwencji}
+
+Część własności sekwencji można uzyskać tworząc standardowe zapytania SQL, ograniczając się do wybranej sekwencji. W ten sposób możemy obliczyć agregacje i miary nie uwzględniając kolejności danych. Podczas uwzględnienia kolejności możemy uzyskać na przykład średnie lub sumy uwzględniając tylko bezpośredniego następnika i poprzednika w sekwencji. W tym celu można wykorzystać klauzulę OVER wraz z ustawieniem okna.  W przykładzie \ref{sql:ekstr} przedstawiono jednak wyliczenie sumy czasu oczekiwania ograniczając się do poprzedniego, obecnego i następnego czasu oczekiwania. 
+
+\begin{lstlisting}[language=sql,caption={Wyliczenie sumy czasu oczekiwania dla wybranej sekwencji.},label={sql:ekstr}]
+SELECT timestmp, SUM(num_measure) OVER (PARTITION BY id_seq ORDER BY timestmp ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING)
+ FROM route WHERE activity = `waiting` AND id_seq = 100;
+\end{lstlisting}
+
+
+\subsection{Grupowanie}
+
+Grupowanie można wykonać za pomocą standardowej klauzuli GROUP BY, która umożliwia pogrupowanie danych na podstawie atrybutów oraz obliczenie wybranych statystyk dla pogrupowanych danych. 
+\begin{lstlisting}[language=sql,caption={Grupowanie sekwencji na podstawie znacznika czasu, ulicy oraz typu urządzenia z obliczenie sumy zużytego prądu},label={sql:group}]
+ 
+SELECT timestmp, id_street, type_device, SUM(power_consum) 
+FROM power_consumption 
+GROUP BY timestmp, id_street, type_device
+
+\end{lstlisting}
+
+
+\subsection{Podsumowanie}
+Język SQL posiada dobrą bazę potrzebną do przetwarzania danych sekwencyjnych zdarzeń. Zawiera wbudowane funkcję umożliwiające wyszukiwanie wzorców, czyli z najbardziej pożądanych funkcjonalności podczas analizy danych sekwencyjnych. Dodatkowo umożliwia agregacje sekwencji, wyznaczenia miar pojedynczej sekwencji oraz grupowanie. Wymagają one jednak czasami wprawy w operowaniu językiem SQL i znajomością działania podzapytań. 
+
+SQL nie zawiera, jednak rozwiązań dla sekwencji interwałów, a tym bardziej zdarzenio-interwałów. Oznacza to, że przetwarzanie takich sekwencji wymaga zwiększenia złożoności zapytania, o ile jest to możliwe lub wykorzystanie PL/SQL i stworzenie własnych funkcji i procedur. Wymaga to dodatkowej wiedzy od programisty oraz wydłuża czas jaki potrzeba do przetworzenia sekwencji. 
+
+Innym minusem wykorzystania języka SQL i relacyjnej bazy danych jest konieczność przygotowania atrybutu porządkowego, inaczej dane te nie będą posiadały kolejności występowania wymaganej przez dane sekwencyjne. 
+
+\section{Cypher}
+
+Cypher jest językiem przetwarzania grafów wykorzystywanym w bazie danych Neo4j. Umożliwia on wykonywanie operacji tworzenia, modyfikacji i przetwarzania grafów. Przetwarzanie sekwencji za pomocą języka Cypher jest możliwe, gdy dane zostaną przekształcone do formy węzłów i relacji w grafie skierowanym. Każda sekwencja będzie osobnym grafem. Dane w węzłach i relacjach są zapisywane w własnościach, czyli parach klucz - wartość, gdzie klucz jest ciągiem znaków a wartość może być dowolnego typu. Węzły mogą składać się z etykiety oraz własności. Etykiety pozwalają na grupowanie węzłów w zbiory. Dodatkowo węzły mogą mieć wiele etykiet. Relacje składają się z typu oraz mogą zawierać własności. Relacje muszą mieć węzeł początkowy i końcowy oraz kierunek. 
+
+\subsection{Konstrukcja sekwencji}
+Do utworzenia grafu wykorzystuje się klauzulę CREATE, która pozwala tworzyć nowe węzły oraz później stworzyć relacje między dwoma stworzonymi wcześniej węzłami. W tej klauzuli możliwe jest podanie etykiet oraz własności. Nadawany jest, również kierunek relacji. Możliwe jest zapobieganie wstawienia relacji o tym samym typie przez dodanie po klauzuli CREATE opcjonalnego słowa kluczowego UNIQUE.
+
+\begin{lstlisting}[caption={Tworzenie węzła oraz relacji między dwoma węzłami},label={cyp:create1}]
+CREATE 
+(:etykieta1 {klucz1:wartosc1,klucz2:wartosc2,...kluczn:wartoscn})
+
+CREATE
+(wezel1 )-[:typ {klucz1:wartosc1,klucz2:wartosc2,...kluczn:wartoscn}]->(wezel12)
+\end{lstlisting}
+
+W przykładzie \ref{cyp:create} utworzono, krótką sekwencję z zapisaniem części informacji, o typie aktywności oraz wartości numerycznej w łuku. Można zauważyć przypisanie etykiet po dwukropku oraz przypisanie danych w nawiasach klamrowych.
+
+\begin{lstlisting}[caption={Tworzenie sekwencji},label={cyp:create}]
+CREATE 
+(DOM:home {id_seq:1,id_person:1,id_place:1,timestmp:"01-01-2017 07:00"}),
+(P1:bus_stop {id_seq:1,id_person:1,id_place:2,timestmp:"01-01-2017 07:05"}),
+(P1_2:bus_stop {id_seq:1,id_person:1,id_place:2,timestmp:"01-01-2017 07:10"}),
+(DOM )-[:distance {num_measure: 200,unit:"m"}]->(P1),
+(P1 )-[:waiting {num_measure: 5,unit:"min"}]->(P1_2);
+\end{lstlisting}
+
+\subsection{Warunki}
+
+Istnieją dwie klauzule, w których możemy tworzyć warunki dla przetwarzanych danych. Pierwszą jest klauzula MATCH służąca do definiowania wzorców. Możliwe jest w niej ograniczenie węzłów do tych o określonej etykiecie lub o własności z określoną wartością. W tej klauzuli możliwe jest, również ograniczenie relacji do tych o określonym typie. Druga klauzulą jest WHERE działająca na podobnej zasadzie jak w SQL. Możemy wykorzystywać operatory logiczne takie jak AND, OR , NOT czy XOR do tworzenia złożonych warunków. 
+
+\begin{lstlisting}[caption={Wyszukanie sekwencji z łukiem o jednostce wyrażonej w metrach i typie relacji distance},label={cyp:where}]
+MATCH (n)-[r:distance]->(m)
+WHERE r.unit = "m" AND
+n.id_place = 11
+RETURN DISTINCT n.id_seq;
+\end{lstlisting}
+
+\subsection{Wzorce}
+
+Wzorce definiowane są w klauzuli MATCH, w których podawana jest kolejność węzłów oraz relacji i jej kierunkiem. Możliwe jest definiowanie ile relacji ma się znajdować pomiędzy dwoma węzłami. Węzły zapisywane są jako nawiasy okrągłe w których można podać zmienną potrzebną do wyświetlenia danych w klauzuli RETURN. Relacje zapisywane są w nawiasach kwadratowych z możliwym ograniczeniem do typów. Podstawowymi postaciami wzorców, które mogą być rozubowane są:
+\begin{itemize}
+\item () - dowolny węzeł,
+\item (x) - dowolny węzeł z przypisaniem do zmiennej x,
+\item (x:etykieta) - węzeł o podanej etykiecie z przypisaniem do zmiennej x,
+\item (x)-->(y) - istnieje relacja od x do y,
+\item (x)--(y) - istnieje relacja między x i y,
+\item (x)-[r]->(y) - istnieje związek r z węzła x do węzła y,
+\item (x)-[r:typ]->(y) - istnieje związek r z węzła x do węzła y o podanym typie relacji,
+\item (x)-[*]->(y) - istnieje ścieżka od x do y o nieokreślonej długości,
+\item (x)-[*1..3]->(y) - istnieje ścieżka od x do y o określonej długości ograniczonej od góry i z dołu
+\end{itemize}
+
+W przykładzie \ref{cyp:pattern} stworzono wzorzec wyszukujący podsekwencję zaczynającą się od wierzchołka o etykiecie bus\_stop, następnie powinien być łuk o etykiecie oczekiwania, dowolny wierzchołek, łuk przystanków i ostatni wierzchołek. W rezultacie otrzymujemy id sekwencji, w której wystąpił wzorzec oraz znaczniki czasowe początku i końca podsekwencji. 
+\begin{lstlisting}[caption={Wzorzec},label={cyp:pattern}]
+MATCH (n:bus_stop)-[:waiting]-()-[:stops]-(m)
+RETURN n.id_seq, n.timestmp,m.timestmp;
+\end{lstlisting}
+
+
+\subsection{Ekstrakcja własności z sekwencji}
+
+Możliwe jest wyznaczenie miar dla pojedynczych sekwencji pewnych własności jak długość, średnie wartości czy sumy. W zapytaniu należy ograniczyć krotki danych do tych dotyczących pojedynczej sekwencji. Następnie W klauzuli RETURN należy podać funkcje statystyczne takie jak: count, sum, avg, max, min i inne, aby otrzymać miary dotyczące wybranej sekwencji.
+
+\begin{lstlisting}[caption={Ekstrakcja własności z sekwencji - średnia wartość oczekiwania oraz liczebność łuków},label={cyp:ekstr}]
+MATCH (n)-[r:waiting]->()
+WHERE n.id_seq = 1
+RETURN avg(r.num_measure);
+
+
+MATCH (n)-[r]->()
+WHERE n.id_seq = 1
+RETURN count(r);
+\end{lstlisting}
+
+\subsection{Grupowanie}
+Możliwe jest grupowanie sekwencji w podobny sposób jak wyznaczanie miar. Nie potrzebna jest w tym wypadku klauzula GROUP BY znana z SQL. Wystarczy podać w klauzuli RETURN potrzebne własności oraz dostępne funkcje statystyczne. Pomocna w bardziej złożonych grupowaniach, może okazać się klauzula WITH pozwalająca podzielić zapytania na fragmenty. Pełni ona rolę klauzuli RETURN, która jest później dalej przetwarzana. Należy pamiętać, aby każde wyrażenie występujące w tej klauzuli posiadało alias.
+
+\begin{lstlisting}[caption={Grupowanie obliczające średni zużycie prądu przez dany typ urządzeń},label={cyp:group}]
+MATCH (n)-[r]-(m)
+WITH n.type_device as type_device, n.id_device as id_device, avg(r.power_consum) as power_consum_device
+RETURN type_device, avg(power_consum_device) as power_consum_device
+\end{lstlisting}
+
+
+\subsection{Podsumowanie}
+
+Język Cypher umożliwia przetwarzania sekwencji zarówno w postaci zdarzeń jaki i interwałów. Przewagą składowania danych w bazie grafowej nad bazą relacyjną jest niewątpliwie fakt, dane za pomocą relacji są uporządkowane w odpowiednią kolejność wymaganą przez sekwencje. Tworzenie wzorców jest proste i składa się ze zbudowania swego rodzaju sekwencji węzłów i relacji, która jest prosta w odczytaniu. Istnieje, również możliwość wyznaczanie miar dla pojedynczych sekwencji. Grupowanie sekwencji jest dostępne oraz język Cypher posiada możliwość podzielenia zapytania na fragmenty za pomocą klauzuli WITH, co może ułatwić tworzenie zapytania dla bardziej złożonych grupowań. 
+
+Cypher nie pozwala jednak za pomocą wbudowanych mechanizmów agregować sekwencji interwałowych tak, aby otrzymać w wyniku zapytania sekwencję interwałów z agregowaną wartością. W ten sposób możliwe byłoby np. sumowanie zużycia energii wszystkich urządzeń w domu w odpowiednich przedziałach czasowych.
+
+\section{EPL}
+
+EPL jest językiem przetwarzania strumieni wykorzystywanym w oprogramowaniu Esper. Strumieniem danych składa się ze zdarzeń zawierających dane i pojawiające się w określonym czasie. Strumień jest sekwencją zdarzeń. Zdarzeniami mogą być proste obiekty Java, pary atrybutów klucz-wartość, dokument XML. Zapytanie definiują relację, która jest zmiennym w czasie wielozbiorem krotek. Wraz ze zmienności strumienia dochodzi do pojawiania się nowych zdarzeń w relacji oraz usuwania innych zdarzeń. Relacja w ten sposób tworzy dwa strumienie wynikowe: zdarzeń wstawianych oraz zdarzeń usuwanych. Zakres oraz zmienność zdarzeń definiowana jest za pomocą okna. W zależności od potrzeby można wykorzystać różne typy okien takie jak: długościowe, czasowe, wsadowe i inne. Oznacza to, że EPL jest przystosowany głównie do pewnych fragmentach sekwencji, a nie na całej sekwencji. Składnia EPL jest bardzo zbliżona do tej wykorzystywanej w języku SQL z dodatkowymi klauzulami i funkcjami, które zostały dodane z powodu natury strumienia.
+\subsection{Warunki}
+
+Filtrowanie zdarzeń odbywa się przez opcjonalną klauzulę WHERE. Możliwości dostępne w tej klauzuli są podobne jak w odpowiednikach w SQL oraz Cypher. Umożliwia tworzenie ograniczeń złożonych za pomocą operatorów logicznych AND, OR oraz NOT. Umożliwia ograniczenie zdarzeń przez podanie wartości lub przedziałów wartości atrybutów zawartych w zdarzeniu. Należy, również pamiętać, że zakres przetwarzanych zdarzeń może być również ograniczony za pomocą odpowiednich okien.
+
+\begin{lstlisting}[language=sql,caption={Przykład ograniczenia strumienia danych},label={epl:where}]
+SELECT  *
+FROM    power_consumption.win:length(1)
+WHERE   id_home IN (100,500,1213)
+and     not(type_device = "TV")
+\end{lstlisting}
+
+\subsection{Wzorce}
+
+Wyszukiwanie wzorca dostępne jest za pomocą match\_recognize, którego składania jest podobna do tej zaimplementowanej w Oracle SQL. Umożliwia ona zdefiniowanie przez użytkownika własnego wzorca, który będzie wyszukiwany w strumieniu. W przykładzie \ref{epl:pattern} przedstawiono składnie match\_recognize. Poszczególne elementy mają poniższe znaczenie:
+\begin{itemize}
+\item partition by - dzieli zdarzenia w strumieniu na osobne sekwencje na podstawie atrybutu w zdarzeniu,
+\item measures - wyznacza miary otrzymywane na wyjściu,
+\item all matches - wymusza wyświetlenie wszystkich wyszukanych dopasowań, nawet jeśli dochodzi do nakładania się dopasowań,
+\item after match skip - określa w jaki sposób ma być wznowione wyszukiwanie wzorca po znalezieniu dopasowania,
+\item pattern () - definiuje poszukiwany wzorzec, 
+\item interval - okresa jak długo silnik może czekać na przybycie kolejnego zdarzenia, które może być włączone w dopasowanie,
+\item define - umożliwia definiowane warunków booleanowskich dla zmiennych zawartych we wzorcu; zmienne we wzorcu nie wymagają definicja, jeśli jej brak domyślnie uznawana jest za prawdę.
+
+\end{itemize}
+
+\begin{lstlisting}[language=sql,caption={Składnia match\_recognize},label={epl:pattern}]
+ match_recognize (
+  [ partition by wyrazenie_dzielace ]
+  measures  wyrazenie_miary as nazwa_kolumny miary [,...]
+  [ all matches ]
+  [ after match skip (past last row | to next row | to current row) ]
+  pattern ( wzorzec [,...] )
+  [ interval przedzial_czasowy [or terminated] ]
+  [ define  zmienna as warunek  [,...] ]
+)
+\end{lstlisting}
+
+\subsection{Agregacja}
+
+Agregacje można wykonać w klauzuli SELECT z pomocą funkcji agregujących. Jeśli w klauzuli podamy same wartości agregujące to w strumieniu wynikowym otrzymamy pojedynczy wiersz zawierający te wartości. W przypadku, gdy podamy, również atrybut lub wartość nieagregowaną, wtedy otrzymamy dla każdego zdarzenia mieszczącego się w oknie wiersz zawierający wartość agregacji.
+
+\begin{lstlisting}[language=sql,caption={Agregacja zużycia prądu w pojedynczym domu przez wszystkie urządzenia},label={epl:aggre}]
+SELECT sum(power_consum)
+FROM power_consumption.win:time_batch(1 sec)
+WHERE id_home = 1 
+\end{lstlisting}
+
+\subsection{Ekstrakcja własności z sekwencji}
+
+W celu uzyskania własności dla całej pojedynczej sekwencji warto użyć okna zachowania wszystkich (keepall()). W ten sposób przy agregowaniu zachowamy wszystkie zdarzenia i w wyniku otrzymamy np.: miary od rozpoczęcia strumienia i spełniające inne wymagania.
+
+\begin{lstlisting}[language=sql,caption={Wyznaczanie całkowitego zużycia prądu dla wybranego domostwa},label={epl:named_window}]
+SELECT sum(power_consum)
+FROM power_consumption.win:keepall()
+WHERE id_home = 1 
+\end{lstlisting}
+
+\subsection{Funkcje grupujące}
+Grupowanie danych można uzyskać w EPL za pomocą dwóch podejść. Pierwszym jest użycie klauzuli GROUP BY wraz z klauzula HAVING do nadania ograniczeń opierających się na wynikach grupowania. Grupowanie zostaje rozpoczęte podczas użycia funkcji grupujących takich jak: sumowanie (sum), średnia (avg), zliczanie (count),maksimum (max),minimum (min), mediana (median),odchylenie standardowe (stddev) i inne. W wyniku otrzymamy wiersz wynikowy dla każdej unikalnej wartości atrybutu grupującego.
+
+\begin{lstlisting}[language=sql,caption={Grupowanie za pomocą GROUP BY z podziałem na sekwencje dla domu oraz typu urządzenia},label={epl:group}]
+SELECT id_home,type_device, sum(power_consum)
+FROM power_consumption.win:time_batch(10 sec)
+GROUP BY  id_home, type_device
+HAVING sum(power_consum) >100
+\end{lstlisting}
+
+Drugim sposobem jest wykorzystanie wbudowanego okna std:groupwin, który dzieli strumienie danych ze względu na atrybut podany jako argument. Dodatkowo można wykorzystać okno stat:uni wyliczające dodatkowe statystki taki jak: suma (total), średnia (avarage), wariancje (variance), odchylenie standardowe (stddev), zliczanie (datapoints).
+
+\begin{lstlisting}[language=sql,caption={Grupowanie za pomocą groupwin z podziałem na typ urządzenia i wykorzystanie stat:uni},label={epl:group2}]
+select type_device, total, avarage
+from power_consumption.std:groupwin(type_device).stat:uni(power_consum).win:time_batch(10 sec)
+\end{lstlisting}
+
+\subsection{Podsumowanie}
+Esper z językiem EPL posiada takie same możliwości przetwarzania sekwencji zdarzeń jak język SQL. Ponadto dzięki specyfice strumieni nie ma problemu z utrzymaniem kolejności zdarzeń w sekwencji jak to było w przypadku relacyjnej bazy danych. Esper posiada różne rodzaje okien ograniczające zdarzenia przetwarzane w danym momencie, co umożliwia różne podejścia do agregacji danych oraz grupowania w zależności typu problemu. Dodatkowo zostało zaimplementowane rozwiązanie wyszukiwania wzorców zdefiniowanych przez użytkownika.
+Esper jednak przy analizie całej sekwencji może być słabo wydajny, jeśli zostanie użyte okna zachowania wszystkich zdarzeń pasujących do ograniczeń. W ten sposób przy bardzo dużej liczbie zdarzeń do zachowania może dojść do przeładowania pamięci operacyjnej, a co za tym idzie dojdzie do spadku wydajności. Esper nie radzie sobie z sekwencjami interwałów, które nie są kompatybilne z działaniem strumieni.

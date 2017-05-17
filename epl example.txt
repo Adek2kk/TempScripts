@@ -1,0 +1,33 @@
+Konstrukcje
+
+SELECT ISTREAM POWERCONSUM, IDDEVICE, IDHOME, TYPEDEVICE, DATEVARCHAR 
+FROM PowerEvent(TYPEDEVICE = `tv`, POWERCONSUM>0).win:length(10).std:unique(IDDEVICE)
+
+Selekcja
+
+Własności sekwencji
+
+SELECT IDDEVICE, total, average, datapoints 
+FROM PowerEvent().std:groupwin(IDDEVICE).stat:uni(POWERCONSUM)
+
+Wzorce
+
+SELECT * FROM RouteEvent 
+match_recognize(
+    PARTITION BY IDROUTE 
+    MEASURES
+        BIKE.IDROUTE AS IDROUTE,
+        BIKE.DATEVARCHAR AS SEQ_TIME_START, 
+        TRAM_STOP.DATEVARCHAR AS SEQ_TIME_END 
+    PATTERN (BIKE WALK TRAM_STOP) 
+    DEFINE 
+        BIKE AS BIKE.ACTIVITY = 'bike_ride', 
+        WALK AS WALK.ACTIVITY = 'walking', 
+        TRAM_STOP AS TRAM_STOP.TYPEPLACE = 'tram_stop')
+		
+
+Agregacja sekwencji
+
+Grupowanie sekwencji
+
+Przekształcenie sekwencji
