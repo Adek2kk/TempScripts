@@ -33,6 +33,37 @@ TRAM_STOP AS TRAM_STOP.type_place = `tram_stop`
 
 Selekcja
 
+SELECT * FROM ROUTE 
+MATCH_RECOGNIZE(
+    PARTITION BY ID_ROUTE
+    ORDER BY TIMESTAMP_EPOCH 
+    ONE ROW PER MATCH 
+    PATTERN (BIKE WALK TRAM_STOP) 
+    DEFINE 
+        BIKE AS BIKE.activity = 'bike_ride',
+        WALK AS WALK.activity = 'walking',
+        TRAM_STOP AS TRAM_STOP.type_place = 'tram_stop') MR;
+		
+SELECT * FROM POWER_CONSUMPTION 
+MATCH_RECOGNIZE(
+PARTITION BY ID_DEVICE
+ORDER BY TIMESTAMP_EPOCH
+MEASURES 
+      COUNT(*) AS COUNT_EVENT
+ONE ROW PER MATCH 
+PATTERN (EVENT+) 
+DEFINE EVENT AS 1=1) MR
+WHERE MR.COUNT_EVENT > 8;
+
+studentów},label={examplesql:whereEvent}]
+SELECT * FROM ROUTE 
+MATCH_RECOGNIZE(
+PARTITION BY ID_ROUTE
+ORDER BY TIMESTAMP_EPOCH
+ONE ROW PER MATCH 
+PATTERN (EVENT+)
+DEFINE EVENT AS EVENT.type_person=`student`) MR;
+
 Własności sekwencji
 
 SELECT * FROM POWER_CONSUMPTION 
@@ -63,7 +94,7 @@ MATCH_RECOGNIZE(
     DEFINE 
         BIKE AS BIKE.activity = `bike_ride`,
         WALK AS WALK.activity = `walking`,
-        TRAM_STOP AS TRAM_STOP.type_place = `tram_stop`
+        TRAM_STOP AS TRAM_STOP.type_place = `tram_stop`) MR;
 		
 SELECT * FROM ROUTE 
 MATCH_RECOGNIZE(
@@ -75,11 +106,26 @@ PATTERN (BIKE+ WALK+ TRAM_STOP)
 DEFINE 
 BIKE AS BIKE.activity = `bike_ride`,
 WALK AS WALK.activity = `walking`,
-TRAM_STOP AS TRAM_STOP.type_place = `tram_stop`
+TRAM_STOP AS TRAM_STOP.type_place = `tram_stop`) MR;
 
 
 Agregacja sekwencji
 
 Grupowanie sekwencji
+SELECT 
+    MR.TYPE_DEVICE, 
+    SUM(MR.SUM) AS SUM, 
+    COUNT(MR.TYPE_DEVICE) AS COUNT
+FROM POWER_CONSUMPTION 
+    MATCH_RECOGNIZE(
+    PARTITION BY ID_DEVICE
+    ORDER BY TIMESTAMP_EPOCH
+    MEASURES 
+          SUM(POWER_CONSUM) AS SUM,
+          LAST(EVENT.TYPE_DEVICE) AS TYPE_DEVICE
+    ONE ROW PER MATCH 
+    PATTERN (EVENT+) 
+    DEFINE EVENT AS 1=1) MR
+GROUP BY MR.TYPE_DEVICE; 
 
 Przekształcenie sekwencji

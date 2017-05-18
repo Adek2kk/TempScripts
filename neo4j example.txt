@@ -14,6 +14,25 @@ CREATE
 		
 Selekcja
 
+MATCH (n)-[r1:bike_ride]->(k)-[r2:walking]->(t:tram_stop)
+RETURN  DISTINCT n.id_route AS ID_ROUTE;
+
+MATCH p= (n)-[r*]->(m) 
+WHERE NOT ( ()-[]->(n) OR (m)-[]->() ) 
+WITH 
+    n.id_device AS ID_DEVICE, 
+    length(p)+1 AS COUNT_EVE 
+WHERE COUNT_EVE > 8
+RETURN ID_DEVICE
+
+MATCH (n)-[]->() 
+WHERE n.type_person = "student" 
+RETURN DISTINCT n.id_route AS ID_ROUTE
+
+MATCH p= (n)-[r*]->(m) 
+WHERE NOT ( ()-[]->(n) OR (m)-[]->() ) AND all(x IN r WHERE x.power_consum>0)
+RETURN n.id_device
+
 Własności sekwencji
 
 MATCH p= (n)-[r*]->(m) 
@@ -37,5 +56,14 @@ RETURN n,labels(n),k,labels(k),t,labels(t),type(r1),type(r2);
 Agregacja sekwencji
 
 Grupowanie sekwencji
-
+MATCH p= (n)-[r*]->(m) 
+WHERE NOT ( ()-[]->(n) OR (m)-[]->() ) 
+WITH 
+    n.id_device AS ID_DEVICE,
+    labels(n) AS TYPE_DEVICE,
+    REDUCE(sum=0, rel IN r | sum + rel.power_consum) AS SUM 
+RETURN
+	TYPE_DEVICE AS TYPE_DEVICE,
+    SUM(SUM) AS SUM,
+    COUNT(TYPE_DEVICE) AS COUNT
 Przekształcenie sekwencji

@@ -5,6 +5,25 @@ FROM PowerEvent(TYPEDEVICE = `tv`, POWERCONSUM>0).win:length(10).std:unique(IDDE
 
 Selekcja
 
+SELECT * FROM RouteEvent 
+match_recognize(
+    PARTITION BY IDROUTE 
+    MEASURES
+        BIKE.IDROUTE AS IDROUTE
+    PATTERN (BIKE WALK TRAM_STOP) 
+    DEFINE 
+        BIKE AS BIKE.ACTIVITY = `bike_ride`, 
+        WALK AS WALK.ACTIVITY = `walking`, 
+        TRAM_STOP AS TRAM_STOP.TYPEPLACE = `tram_stop`)
+		
+SELECT ISTREAM IDDEVICE
+FROM PowerEvent().win:keepall 
+GROUP BY IDDEVICE 
+HAVING count(*) > 8
+
+SELECT ISTREAM IDROUTE	
+FROM RouteEvent(TYPEPERSON = 'student').std:firstunique(IDROUTE)
+
 Własności sekwencji
 
 SELECT IDDEVICE, total, average, datapoints 
