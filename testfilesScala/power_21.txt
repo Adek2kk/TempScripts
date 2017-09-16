@@ -1,0 +1,14 @@
+21
+E 1493510460|type_device:lightbulb;id_home:2;id_street:101;id_district:1001;id_device:21;date_varchar:30-04-17 0.01
+I |status:OFF;power_consum:0
+E 1493578800|type_device:lightbulb;id_home:2;id_street:101;id_district:1001;id_device:21;date_varchar:30-04-17 19.00
+I |status:ON;power_consum:2
+E 1493582400|type_device:lightbulb;id_home:2;id_street:101;id_district:1001;id_device:21;date_varchar:30-04-17 20.00
+I |status:OFF;power_consum:0
+E 1493583300|type_device:lightbulb;id_home:2;id_street:101;id_district:1001;id_device:21;date_varchar:30-04-17 20.15
+I |status:ON;power_consum:1
+E 1493584200|type_device:lightbulb;id_home:2;id_street:101;id_district:1001;id_device:21;date_varchar:30-04-17 20.30
+I |status:OFF;power_consum:0
+E 1493586000|type_device:lightbulb;id_home:2;id_street:101;id_district:1001;id_device:21;date_varchar:30-04-17 21.00
+I |status:ON;power_consum:4
+E 1493593200|type_device:lightbulb;id_home:2;id_street:101;id_district:1001;id_device:21;date_varchar:30-04-17 23.00 

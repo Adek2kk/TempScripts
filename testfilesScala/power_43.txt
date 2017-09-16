@@ -1,0 +1,10 @@
+43
+E 1493510460|type_device:washer;id_home:4;id_street:201;id_district:1002;id_device:43;date_varchar:30-04-17 0.01
+I |status:OFF;power_consum:0
+E 1493541000|type_device:washer;id_home:4;id_street:201;id_district:1002;id_device:43;date_varchar:30-04-17 8.30 
+I |status:STANDBY;power_consum:3
+E 1493577000|type_device:washer;id_home:4;id_street:201;id_district:1002;id_device:43;date_varchar:30-04-17 18.30 
+I |status:ON;power_consum:40
+E 1493578800|type_device:washer;id_home:4;id_street:201;id_district:1002;id_device:43;date_varchar:30-04-17 19.00 
+I |status:STANDBY;power_consum:2
+E 1493582400|type_device:washer;id_home:4;id_street:201;id_district:1002;id_device:43;date_varchar:30-04-17 20.00  

@@ -1,0 +1,16 @@
+52
+E 1493510460|type_device:tv;id_home:5;id_street:201;id_district:1002;id_device:52;date_varchar:30-04-17 0.01 
+I |status:OFF;power_consum:0
+E 1493535600|type_device:tv;id_home:5;id_street:201;id_district:1002;id_device:52;date_varchar:30-04-17 7.00
+I |status:ON;power_consum:25
+E 1493550900|type_device:tv;id_home:5;id_street:201;id_district:1002;id_device:52;date_varchar:30-04-17 11.15
+I |status:STANDBY;power_consum:0.2
+E 1493564400|type_device:tv;id_home:5;id_street:201;id_district:1002;id_device:52;date_varchar:30-04-17 15.00
+I |status:ON;power_consum:8
+E 1493568000|type_device:tv;id_home:5;id_street:201;id_district:1002;id_device:52;date_varchar:30-04-17 16.00
+I |status:STANDBY;power_consum:0.3
+E 1493578800|type_device:tv;id_home:5;id_street:201;id_district:1002;id_device:52;date_varchar:30-04-17 19.00
+I |status:ON;power_consum:20
+E 1493590500|type_device:tv;id_home:5;id_street:201;id_district:1002;id_device:52;date_varchar:30-04-17 22.15
+I |status:STANDBY;power_consum:0.1
+E 1493593200|type_device:tv;id_home:5;id_street:201;id_district:1002;id_device:52;date_varchar:30-04-17 23.00

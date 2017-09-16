@@ -1,0 +1,14 @@
+33
+E 1493517600|type_device:washer;id_home:3;id_street:101;id_district:1001;id_device:33;date_varchar:30-04-17 2.00 
+I |status:OFF;power_consum:0
+E 1493542800|type_device:washer;id_home:3;id_street:101;id_district:1001;id_device:33;date_varchar:30-04-17 9.00
+I |status:ON;power_consum:35
+E 1493544600|type_device:washer;id_home:3;id_street:101;id_district:1001;id_device:33;date_varchar:30-04-17 9.30
+I |status:STANDBY;power_consum:1
+E 1493546400|type_device:washer;id_home:3;id_street:101;id_district:1001;id_device:33;date_varchar:30-04-17 10.00
+I |status:ON;power_consum:35
+E 1493548200|type_device:washer;id_home:3;id_street:101;id_district:1001;id_device:33;date_varchar:30-04-17 10.30
+I |status:STANDBY;power_consum:1
+E 1493560800|type_device:washer;id_home:3;id_street:101;id_district:1001;id_device:33;date_varchar:30-04-17 14.00
+I |status:ON;power_consum:35
+E 1493563200|type_device:washer;id_home:3;id_street:101;id_district:1001;id_device:33;date_varchar:30-04-17 14.40

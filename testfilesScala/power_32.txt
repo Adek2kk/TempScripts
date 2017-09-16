@@ -1,0 +1,18 @@
+32
+E 1493517600|type_device:tv;id_home:3;id_street:101;id_district:1001;id_device:32;date_varchar:30-04-17 2.00
+I |status:STANDBY;power_consum:3
+E 1493550000|type_device:tv;id_home:3;id_street:101;id_district:1001;id_device:32;date_varchar:30-04-17 11.00
+I |status:ON;power_consum:20
+E 1493557200|type_device:tv;id_home:3;id_street:101;id_district:1001;id_device:32;date_varchar:30-04-17 13.00
+I |status:STANDBY;power_consum:1
+E 1493564400|type_device:tv;id_home:3;id_street:101;id_district:1001;id_device:32;date_varchar:30-04-17 15.00
+I |status:ON;power_consum:5
+E 1493566200|type_device:tv;id_home:3;id_street:101;id_district:1001;id_device:32;date_varchar:30-04-17 15.30
+I |status:STANDBY;power_consum:1
+E 1493572500|type_device:tv;id_home:3;id_street:101;id_district:1001;id_device:32;date_varchar:30-04-17 17.15
+I |status:ON;power_consum:5
+E 1493573100|type_device:tv;id_home:3;id_street:101;id_district:1001;id_device:32;date_varchar:30-04-17 17.25
+I |status:STANDBY;power_consum:1
+E 1493578800|type_device:tv;id_home:3;id_street:101;id_district:1001;id_device:32;date_varchar:30-04-17 19.00
+I |status:ON;power_consum:40
+E 1493593200|type_device:tv;id_home:3;id_street:101;id_district:1001;id_device:32;date_varchar:30-04-17 23.00
