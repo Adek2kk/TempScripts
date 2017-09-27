@@ -1,0 +1,16 @@
+31
+E 1493533800|type_place:home;id_route:31;id_place:31;type_person:student;date_varchar:30-04-17 6.30
+I |activity:walking;num_measure:400;unit:m
+E 1493534100|type_place:bus_stop;id_route:31;id_place:101;type_person:student;date_varchar:30-04-17 6.35
+I |activity:waiting;num_measure:8;unit:min
+E 1493534580|type_place:bus_stop;id_route:31;id_place:101;type_person:student;date_varchar:30-04-17 6.43
+I |activity:bus_ride;num_measure:10;unit:stops
+E 1493536980|type_place:bus_stop;id_route:31;id_place:111;type_person:student;date_varchar:30-04-17 7.23
+I |activity:walking;num_measure:300;unit:m
+E 1493537220|type_place:tram_stop;id_route:31;id_place:303;type_person:student;date_varchar:30-04-17 7.27
+I |activity:waiting;num_measure:9;unit:min
+E 1493537760|type_place:tram_stop;id_route:31;id_place:303;type_person:student;date_varchar:30-04-17 7.36
+I |activity:bus_ride;num_measure:4;unit:stops
+E 1493538360|type_place:tram_stop;id_route:31;id_place:307;type_person:student;date_varchar:30-04-17 7.46
+I |activity:walking;num_measure:250;unit:m
+E 1493538600|type_place:university;id_route:31;id_place:30;type_person:student;date_varchar:30-04-17 7.50

@@ -1,0 +1,10 @@
+13
+E 1493535120|type_place:home;id_route:13;id_place:13;type_person:worker;date_varchar:30-04-17 6.52
+I |activity:walking;num_measure:150;unit:m
+E 1493535420|type_place:bus_stop;id_route:13;id_place:201;type_person:worker;date_varchar:30-04-17 6.57
+I |activity:waiting;num_measure:3;unit:min
+E 1493535600|type_place:bus_stop;id_route:13;id_place:201;type_person:worker;date_varchar:30-04-17 7.00
+I |activity:bus_ride;num_measure:10;unit:stops
+E 1493538000|type_place:bus_stop;id_route:13;id_place:211;type_person:worker;date_varchar:30-04-17 7.40
+I |activity:walking;num_measure:750;unit:m
+E 1493538960|type_place:work_place_1;id_route:13;id_place:10;type_person:worker;date_varchar:30-04-17 7.56

@@ -1,0 +1,10 @@
+22
+E 1493536200|type_place:home;id_route:22;id_place:22;type_person:worker;date_varchar:30-04-17 7.10
+I |activity:walking;num_measure:1000;unit:m
+E 1493537760|type_place:tram_stop;id_route:22;id_place:402;type_person:worker;date_varchar:30-04-17 7.36
+I |activity:waiting;num_measure:5;unit:min
+E 1493538060|type_place:tram_stop;id_route:22;id_place:402;type_person:worker;date_varchar:30-04-17 7.41
+I |activity:tram_ride;num_measure:8;unit:stops
+E 1493539200|type_place:tram_stop;id_route:22;id_place:406;type_person:worker;date_varchar:30-04-17 8.00
+I |activity:walking;num_measure:300;unit:m
+E 1493539500|type_place:work_place_2;id_route:22;id_place:20;type_person:worker;date_varchar:30-04-17 8.05
